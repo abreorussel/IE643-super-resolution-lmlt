@@ -96,7 +96,7 @@ def process_in_batches(opt):
         print(f"Processing batch {batch_num + 1}/{num_batches}...")
 
         opt['save_folder_batch'] = osp.join(opt['save_folder'], f'batch_{batch_num + 1}')
-        if not osp.exists(opt['save_folder_batch']):
+        if osp.exists(opt['save_folder_batch']):
             print(f"Folder {opt['save_folder_batch']} already exists. Deleting it to start fresh...")
             shutil.rmtree(opt['save_folder_batch'])
 
