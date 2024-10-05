@@ -124,9 +124,9 @@ def extract_subimages(opt , img_list):
     if not osp.exists(save_folder):
         os.makedirs(save_folder)
         print(f'mkdir {save_folder} ...')
-    else:
-        print(f'Folder {save_folder} already exists. Exit.')
-        sys.exit(1)
+    # else:
+    #     print(f'Folder {save_folder} already exists. Exit.')
+    #     sys.exit(1)
 
     # img_list = list(scandir(input_folder, full_path=True))
 
