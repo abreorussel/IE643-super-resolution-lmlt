@@ -5,6 +5,7 @@ import sys
 from multiprocessing import Pool
 from os import path as osp
 from tqdm import tqdm
+import shutil
 
 from basicsr.utils import scandir
 
@@ -42,6 +43,7 @@ def main():
     opt = {}
     opt['n_thread'] = 20
     opt['compression_level'] = 3
+    opt['batch_size'] = 50
 
     # HR images
     opt['input_folder'] = '/kaggle/working/DIV2K/DIV2K_train_HR'
@@ -65,7 +67,8 @@ def main():
     opt['crop_size'] = 160
     opt['step'] = 80
     opt['thresh_size'] = 0
-    extract_subimages(opt)
+    # extract_subimages(opt)
+    process_in_batches(opt)
 
     # LRx4 images
     opt['input_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X4'
@@ -73,10 +76,35 @@ def main():
     opt['crop_size'] = 120
     opt['step'] = 60
     opt['thresh_size'] = 0
-    extract_subimages(opt)
+    # extract_subimages(opt)
+    process_in_batches(opt)
 
 
-def extract_subimages(opt):
+def process_in_batches(opt):
+    input_folder = opt['input_folder']
+    img_list = list(scandir(input_folder, full_path=True))
+
+    num_batches = len(img_list) // opt['batch_size'] + 1
+
+    for batch_num in range(num_batches):
+        start_idx = batch_num * opt['batch_size']
+        end_idx = min((batch_num + 1) * opt['batch_size'], len(img_list))
+        current_batch = img_list[start_idx:end_idx]
+
+        print(f"Processing batch {batch_num + 1}/{num_batches}...")
+
+        opt['save_folder_batch'] = osp.join(opt['save_folder'], f'batch_{batch_num + 1}')
+        if not osp.exists(opt['save_folder_batch']):
+            os.makedirs(opt['save_folder_batch'])
+
+        extract_subimages(opt, current_batch)
+
+        # Clean up to save space
+        print(f"Cleaning up batch {batch_num + 1}...")
+        shutil.rmtree(opt['save_folder_batch'])
+
+
+def extract_subimages(opt , img_list):
     """Crop images to subimages.
 
     Args:
@@ -86,7 +114,8 @@ def extract_subimages(opt):
             n_thread (int): Thread number.
     """
     input_folder = opt['input_folder']
-    save_folder = opt['save_folder']
+    # save_folder = opt['save_folder']
+    save_folder = opt['save_folder_batch']
     if not osp.exists(save_folder):
         os.makedirs(save_folder)
         print(f'mkdir {save_folder} ...')
@@ -94,7 +123,7 @@ def extract_subimages(opt):
         print(f'Folder {save_folder} already exists. Exit.')
         sys.exit(1)
 
-    img_list = list(scandir(input_folder, full_path=True))
+    # img_list = list(scandir(input_folder, full_path=True))
 
     pbar = tqdm(total=len(img_list), unit='image', desc='Extract')
     pool = Pool(opt['n_thread'])
