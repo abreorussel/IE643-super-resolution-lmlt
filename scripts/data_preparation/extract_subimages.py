@@ -64,22 +64,22 @@ def main():
     process_in_batches(opt)
 
     # LRx3 images
-    opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X3'
-    opt['save_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X3_sub'
-    opt['crop_size'] = 160
-    opt['step'] = 80
-    opt['thresh_size'] = 0
+    # opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X3'
+    # opt['save_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X3_sub'
+    # opt['crop_size'] = 160
+    # opt['step'] = 80
+    # opt['thresh_size'] = 0
     # extract_subimages(opt)
-    process_in_batches(opt)
+    # process_in_batches(opt)
 
     # LRx4 images
-    opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X4'
-    opt['save_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X4_sub'
-    opt['crop_size'] = 120
-    opt['step'] = 60
-    opt['thresh_size'] = 0
+    # opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X4'
+    # opt['save_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X4_sub'
+    # opt['crop_size'] = 120
+    # opt['step'] = 60
+    # opt['thresh_size'] = 0
     # extract_subimages(opt)
-    process_in_batches(opt)
+    # process_in_batches(opt)
 
 
 def process_in_batches(opt):
