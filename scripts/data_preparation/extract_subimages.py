@@ -51,7 +51,8 @@ def main():
     opt['crop_size'] = 480
     opt['step'] = 240
     opt['thresh_size'] = 0
-    extract_subimages(opt)
+    # extract_subimages(opt)
+    process_in_batches(opt)
 
     # LRx2 images
     opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X2'
@@ -59,7 +60,8 @@ def main():
     opt['crop_size'] = 240
     opt['step'] = 120
     opt['thresh_size'] = 0
-    extract_subimages(opt)
+    # extract_subimages(opt)
+    process_in_batches(opt)
 
     # LRx3 images
     opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X3'
