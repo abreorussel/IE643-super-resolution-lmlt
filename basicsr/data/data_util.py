@@ -214,7 +214,7 @@ def paired_paths_from_folder(folders, keys, filename_tmpl):
                                f'But got {len(folders)}')
     assert len(keys) == 2, f'The len of keys should be 2 with [input_key, gt_key]. But got {len(keys)}'
     input_folder, gt_folder = folders
-    print(f"gt_folder : {gt_folder}")
+    # print(f"gt_folder : {gt_folder}")
     input_key, gt_key = keys
 
     input_paths = list(scandir(input_folder))
@@ -222,12 +222,12 @@ def paired_paths_from_folder(folders, keys, filename_tmpl):
     assert len(input_paths) == len(gt_paths), (f'{input_key} and {gt_key} datasets have different number of images: '
                                                f'{len(input_paths)}, {len(gt_paths)}.')
     paths = []
-    print(f"gt_paths : {gt_paths}")
+    # print(f"gt_paths : {gt_paths}")
     for gt_path in gt_paths:
         basename, ext = osp.splitext(osp.basename(gt_path))
-        print(f"basename : {basename} ext:{ext}")
+        # print(f"basename : {basename} ext:{ext}")
         input_name = f'{filename_tmpl.format(basename)}{ext}'
-        print(f"input_name : {input_name} filename_tmpl : {filename_tmpl}")
+        # print(f"input_name : {input_name} filename_tmpl : {filename_tmpl}")
         input_path = osp.join(input_folder, input_name)
         assert input_name in input_paths, f'{input_name} is not in {input_key}_paths.'
         gt_path = osp.join(gt_folder, gt_path)
