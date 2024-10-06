@@ -9,8 +9,10 @@ datasets:
   train:
     name: DF2K
     type: PairedImageDataset
-    dataroot_gt: /data/SR/df2k/datasets/DF2K/DF2K_train_HR_sub
-    dataroot_lq: /data/SR/df2k/datasets/DF2K/DF2K_train_LR_bicubic/X2_sub
+    # dataroot_gt: /data/SR/df2k/datasets/DF2K/DF2K_train_HR_sub
+    # dataroot_lq: /data/SR/df2k/datasets/DF2K/DF2K_train_LR_bicubic/X2_sub
+    dataroot_gt: /kaggle/working/DIV2K/DIV2K_train_HR_sub
+    dataroot_lq: /kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X2_sub
     filename_tmpl: '{}'
     io_backend:
       type: disk
