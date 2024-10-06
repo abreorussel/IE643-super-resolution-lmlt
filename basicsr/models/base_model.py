@@ -287,6 +287,7 @@ class BaseModel():
         """
         logger = get_root_logger()
         net = self.get_bare_model(net)
+        print(f"Current Location : {os.getcwdb()}")
         load_net = torch.load(load_path, map_location=lambda storage, loc: storage)
 
         if param_key is not None:
