@@ -227,6 +227,7 @@ def paired_paths_from_folder(folders, keys, filename_tmpl):
         basename, ext = osp.splitext(osp.basename(gt_path))
         print(f"basename : {basename} ext:{ext}")
         input_name = f'{filename_tmpl.format(basename)}{ext}'
+        print(f"input_name : {input_name} filename_tmpl : {filename_tmpl}")
         input_path = osp.join(input_folder, input_name)
         assert input_name in input_paths, f'{input_name} is not in {input_key}_paths.'
         gt_path = osp.join(gt_folder, gt_path)
