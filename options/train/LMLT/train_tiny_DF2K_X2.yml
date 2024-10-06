@@ -32,8 +32,10 @@ datasets:
   val:
     name: DIV2K_val100
     type: PairedImageDataset
-    dataroot_gt: /data/ECCV/SR/dataset_img/testsets/urban100/HR
-    dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X2
+    # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/urban100/HR
+    # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X2
+    dataroot_gt: /kaggle/working/urban100/HR
+    dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
     filename_tmpl: '{}x2'
     io_backend:
       type: disk
