@@ -73,7 +73,7 @@ network_g:
 path:
   # pretrain_network_g: /data/ECCV/SS/weights/mine_x2_dim_60.pth
   pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2.pth
-  strict_load_g: true
+  strict_load_g: false
 
 # validation settings
 val:
