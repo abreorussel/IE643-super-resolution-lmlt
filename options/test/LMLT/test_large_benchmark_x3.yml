@@ -8,47 +8,49 @@ datasets:
   test_1:  # the 1st test dataset
     name: Set5
     type: PairedImageDataset
-    dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set5/HR
-    dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set5/LR_bicubic/X3
-    filename_tmpl: '{}x3'
+    # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set5/HR
+    # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set5/LR_bicubic/X3
+    dataroot_gt: /kaggle/working/Set5/original
+    dataroot_lq: /kaggle/working/Set5/LRbicx3
+    filename_tmpl: '{}'
     io_backend:
       type: disk
 
-  test_2:  # the 2nd test dataset
-    name: Set14
-    type: PairedImageDataset
-    dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set14/HR
-    dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set14/LR_bicubic/X3
-    filename_tmpl: '{}x3'
-    io_backend:
-      type: disk
+  # test_2:  # the 2nd test dataset
+  #   name: Set14
+  #   type: PairedImageDataset
+  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set14/HR
+  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set14/LR_bicubic/X3
+  #   filename_tmpl: '{}x3'
+  #   io_backend:
+  #     type: disk
 
-  test_3:  # the 1st test dataset
-    name: B100
-    type: PairedImageDataset
-    dataroot_gt: /data/ECCV/SR/dataset_img/testsets/B100/HR
-    dataroot_lq: /data/ECCV/SR/dataset_img/testsets/B100/LR_bicubic/X3
-    filename_tmpl: '{}x3'
-    io_backend:
-      type: disk
+  # test_3:  # the 1st test dataset
+  #   name: B100
+  #   type: PairedImageDataset
+  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/B100/HR
+  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/B100/LR_bicubic/X3
+  #   filename_tmpl: '{}x3'
+  #   io_backend:
+  #     type: disk
 
-  test_4:  # the 2nd test dataset
-    name: Urban100
-    type: PairedImageDataset
-    dataroot_gt: /data/ECCV/SR/dataset_img/testsets/urban100/HR
-    dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X3
-    filename_tmpl: '{}x3'
-    io_backend:
-      type: disk
+  # test_4:  # the 2nd test dataset
+  #   name: Urban100
+  #   type: PairedImageDataset
+  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/urban100/HR
+  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X3
+  #   filename_tmpl: '{}x3'
+  #   io_backend:
+  #     type: disk
 
-  test_5:  # the 1st test dataset
-    name: Manga109
-    type: PairedImageDataset
-    dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Manga109/HR
-    dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Manga109/LR_bicubic/X3
-    filename_tmpl: '{}x3'
-    io_backend:
-      type: disk
+  # test_5:  # the 1st test dataset
+  #   name: Manga109
+  #   type: PairedImageDataset
+  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Manga109/HR
+  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Manga109/LR_bicubic/X3
+  #   filename_tmpl: '{}x3'
+  #   io_backend:
+  #     type: disk
   
   # test_6:
   #   name: DIV2K_val100
@@ -69,7 +71,8 @@ network_g:
 
 # path
 path:
-  pretrain_network_g: /data/ECCV/SS/weights/dim_84_x3.pth
+  # pretrain_network_g: /data/ECCV/SS/weights/dim_84_x3.pth
+  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_large_x3.pth 
   strict_load_g: true
 
 # validation settings
