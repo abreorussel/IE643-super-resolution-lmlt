@@ -295,6 +295,7 @@ class BaseModel():
             if param_key not in load_net and 'params' in load_net:
                 param_key = 'params'
                 logger.info('Loading: params_ema does not exist, use params.')
+            print("Here")
             load_net = load_net[param_key]
         logger.info(f'Loading {net.__class__.__name__} model from {load_path}, with param key: [{param_key}].')
         # remove unnecessary 'module.'
