@@ -289,6 +289,7 @@ class BaseModel():
         net = self.get_bare_model(net)
         print(f"Current Location : {os.getcwdb()}")
         load_net = torch.load(load_path, map_location=lambda storage, loc: storage)
+        print(load_net.keys())
 
         if param_key is not None:
             if param_key not in load_net and 'params' in load_net:
