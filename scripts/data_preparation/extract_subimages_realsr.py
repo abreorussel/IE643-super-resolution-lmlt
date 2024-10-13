@@ -85,8 +85,8 @@ def main():
     opt['batch_size'] = 50
 
     # HR images
-    opt['input_folder'] = 'kaggle/working/RealSR (ICCV2019)/realsr/Train/HR'
-    opt['save_folder'] = 'kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub'
+    opt['input_folder'] = '/kaggle/working/RealSR (ICCV2019)/realsr/Train/HR'
+    opt['save_folder'] = '/kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub'
     # opt['input_folder'] = r'C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)\realsr\Train\HR'
     # opt['save_folder'] = r'C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)\realsr\Train\HR_sub'
     opt['crop_size'] = 480
@@ -96,8 +96,8 @@ def main():
     process_in_batches(opt)
 
     # LRx2 images
-    opt['input_folder'] = 'kaggle/working/RealSR (ICCV2019)/realsr/Train/X2'
-    opt['save_folder'] = 'kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub'
+    opt['input_folder'] = '/kaggle/working/RealSR (ICCV2019)/realsr/Train/X2'
+    opt['save_folder'] = '/kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub'
     # opt['input_folder'] = r'C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)\realsr\Train\X2'
     # opt['save_folder'] = r'C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)\realsr\Train\X2_sub'
     opt['crop_size'] = 240
