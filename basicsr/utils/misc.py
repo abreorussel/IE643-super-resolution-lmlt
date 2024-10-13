@@ -37,6 +37,7 @@ def mkdir_and_rename(path):
 @master_only
 def make_exp_dirs(opt):
     """Make dirs for experiments."""
+    print(f"opt path : {opt['path']}")
     path_opt = opt['path'].copy()
     if opt['is_train']:
         mkdir_and_rename(path_opt.pop('experiments_root'))
