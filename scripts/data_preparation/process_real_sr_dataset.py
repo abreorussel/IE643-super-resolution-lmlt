@@ -3,19 +3,13 @@ import shutil
 from tqdm import tqdm
 import argparse
 
-PATH = r"C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)"
-MAIN_DIRECTORY = "merged"
-DIR_PATH = os.path.join(PATH ,  MAIN_DIRECTORY)
-
-
 def create_directory_structure(sub_sub_directory):
 
     subdirectories = ["Train", "Val"]
-    # subsubdirectories = ["HR","X2", "X3", "X4"]
     subsubdirectories = ["HR" , sub_sub_directory]
 
     # Create the main directory
-    os.makedirs( DIR_PATH ,exist_ok=True)  # Create main directory
+    os.makedirs( DIR_PATH ,exist_ok=True)  
 
     # Create subdirectories and their sub-subdirectories
     for subdir in subdirectories:
@@ -94,9 +88,11 @@ if __name__ == '__main__':
     create_directory_structure("X" + args.scale)
     transfer_data('Train' , args.scale)
     transfer_data('Val' , args.scale)
+    shutil.rmtree(os.path.join(PATH , "Canon"))
+    shutil.rmtree(os.path.join(PATH , "Nikon"))
 
 
-# python process_real_sr_dataset.py --directory_path "C:\\Users\\abreo\\Downloads\\archive (2)\\RealSR (ICCV2019)" --new_directory_name "merged"  --scale "2"
+# python process_real_sr_dataset.py --directory_path "C:\\Users\\abreo\\Downloads\\archive (2)\\RealSR (ICCV2019)" --new_directory_name "realsr"  --scale "2"
                             
 
 
