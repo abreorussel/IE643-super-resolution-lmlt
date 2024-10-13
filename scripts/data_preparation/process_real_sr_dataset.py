@@ -35,11 +35,11 @@ def transfer_data(type , scale_directory):
     lr4_counter = 1  # Counter for LR4 images
     for lens in camera_lens:
         if type == "Val":
-            base_path = os.path.join(PATH , f"{lens}\Test")
+            base_path = os.path.join(PATH , f"{lens}/Test")
         else:
-            base_path = os.path.join(PATH , f"{lens}\{type}")
+            base_path = os.path.join(PATH , f"{lens}/{type}")
 
-        print(f"Base Path: {base_path}")
+        # print(f"Base Path: {base_path}")
         
         for root , dirs , files in os.walk(base_path):
             print(f"Current Directory: {root}")
@@ -66,7 +66,7 @@ def transfer_data(type , scale_directory):
                             except Exception as e:
                                 print(f"An error occurred: {e}")
 
-                            destination_path = os.path.join(DIR_PATH , f'{type}\HR')
+                            destination_path = os.path.join(DIR_PATH , f'{type}/HR')
                             shutil.copy(new_file_path, destination_path)
 
                             hr_counter += 1
@@ -82,7 +82,7 @@ def transfer_data(type , scale_directory):
                                 print(f"Error: A file named '{file_path[:-3]}' already exists in the directory.")
                             except Exception as e:
                                 print(f"An error occurred: {e}")
-                            destination_path = os.path.join(DIR_PATH , f'{type}\X2')
+                            destination_path = os.path.join(DIR_PATH , f'{type}/X2')
                             shutil.copy(new_file_path, destination_path)
 
                             lr2_counter += 1
@@ -98,7 +98,7 @@ def transfer_data(type , scale_directory):
                                 print(f"Error: A file named '{file_path[:-3]}' already exists in the directory.")
                             except Exception as e:
                                 print(f"An error occurred: {e}")
-                            destination_path = os.path.join(DIR_PATH , f'{type}\X3')
+                            destination_path = os.path.join(DIR_PATH , f'{type}/X3')
                             shutil.copy(new_file_path, destination_path)
 
                             lr3_counter += 1
@@ -114,7 +114,7 @@ def transfer_data(type , scale_directory):
                                 print(f"Error: A file named '{file_path[:-3]}' already exists in the directory.")
                             except Exception as e:
                                 print(f"An error occurred: {e}")
-                            destination_path = os.path.join(DIR_PATH , f'{type}\X4')
+                            destination_path = os.path.join(DIR_PATH , f'{type}/X4')
                             shutil.copy(new_file_path, destination_path)
 
                             lr4_counter += 1
