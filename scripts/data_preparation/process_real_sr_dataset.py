@@ -38,6 +38,8 @@ def transfer_data(type , scale_directory):
             base_path = os.path.join(PATH , f"{lens}\Test")
         else:
             base_path = os.path.join(PATH , f"{lens}\{type}")
+
+        print(f"Base Path: {base_path}")
         
         for root , dirs , files in os.walk(base_path):
             print(f"Current Directory: {root}")
