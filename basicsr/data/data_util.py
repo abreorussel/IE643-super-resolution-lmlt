@@ -219,6 +219,8 @@ def paired_paths_from_folder(folders, keys, filename_tmpl):
 
     input_paths = list(scandir(input_folder))
     gt_paths = list(scandir(gt_folder))
+    print(f"KEYS : {keys}")
+    print(f"INPUT_PATHS = {len(input_paths)} GT_PATHS = {len(gt_paths)}")
     assert len(input_paths) == len(gt_paths), (f'{input_key} and {gt_key} datasets have different number of images: '
                                                f'{len(input_paths)}, {len(gt_paths)}.')
     paths = []
