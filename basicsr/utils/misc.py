@@ -46,6 +46,7 @@ def make_exp_dirs(opt):
         if ('strict_load' in key) or ('pretrain_network' in key) or ('resume' in key) or ('param_key' in key):
             continue
         else:
+            print(f"Path : {path}")
             os.makedirs(path, exist_ok=True)
 
 
