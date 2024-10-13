@@ -27,7 +27,7 @@ def create_directory_structure(sub_sub_directory):
 
 
 def transfer_data(type , scale_directory):
-
+    print("Transferring Files ........................")
     camera_lens = ["Canon", "Nikon"]
     hr_counter = 1  # Counter for HR images
     lr2_counter = 1  # Counter for LR2 images
