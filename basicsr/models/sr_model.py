@@ -24,6 +24,7 @@ class SRModel(BaseModel):
         self.print_network(self.net_g)
 
         # load pretrained models
+        print("LOADING PRETRAINED MODEL")
         load_path = self.opt['path'].get('pretrain_network_g', None)
         if load_path is not None:
             param_key = self.opt['path'].get('param_key_g', 'params')
