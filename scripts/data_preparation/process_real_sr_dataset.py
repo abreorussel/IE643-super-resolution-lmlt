@@ -28,7 +28,11 @@ def create_directory_structure(sub_sub_directory):
 
 def transfer_data(type , scale_directory):
 
-    camera_lens = ["Canon" , "Nikon"]
+    camera_lens = ["Canon", "Nikon"]
+    hr_counter = 1  # Counter for HR images
+    lr2_counter = 1  # Counter for LR2 images
+    lr3_counter = 1  # Counter for LR3 images
+    lr4_counter = 1  # Counter for LR4 images
     for lens in camera_lens:
         if type == "Val":
             base_path = os.path.join(PATH , f"{lens}\Test")
@@ -45,11 +49,13 @@ def transfer_data(type , scale_directory):
                     subdir_path = os.path.join(root, dir_name)
                     
                     subdir_files = os.listdir(subdir_path)
+
                     for file in tqdm(subdir_files):
                         file_path = os.path.join(subdir_path, file)
                         if 'HR' in file:
                             try:
-                                new_file_path = file_path[:-7] + ".png"
+                                new_file_name = f"{hr_counter:03d}.png"
+                                new_file_path = os.path.join(subdir_path, new_file_name)
                                 os.rename(file_path, new_file_path)
                             except FileNotFoundError:
                                 print(f"Error: The file '{file_path}' does not exist.")
@@ -60,15 +66,56 @@ def transfer_data(type , scale_directory):
 
                             destination_path = os.path.join(DIR_PATH , f'{type}\HR')
                             shutil.copy(new_file_path, destination_path)
+
+                            hr_counter += 1
+
                         elif 'LR2' in file:
+                            try:
+                                new_file_name = f"{lr2_counter:03d}x2.png"
+                                new_file_path = os.path.join(subdir_path, new_file_name)
+                                os.rename(file_path, new_file_path)
+                            except FileNotFoundError:
+                                print(f"Error: The file '{file_path}' does not exist.")
+                            except FileExistsError:
+                                print(f"Error: A file named '{file_path[:-3]}' already exists in the directory.")
+                            except Exception as e:
+                                print(f"An error occurred: {e}")
                             destination_path = os.path.join(DIR_PATH , f'{type}\X2')
-                            shutil.copy(file_path, destination_path)
+                            shutil.copy(new_file_path, destination_path)
+
+                            lr2_counter += 1
+                            
                         elif 'LR3' in file:
+                            try:
+                                new_file_name = f"{lr3_counter:03d}x3.png"
+                                new_file_path = os.path.join(subdir_path, new_file_name)
+                                os.rename(file_path, new_file_path)
+                            except FileNotFoundError:
+                                print(f"Error: The file '{file_path}' does not exist.")
+                            except FileExistsError:
+                                print(f"Error: A file named '{file_path[:-3]}' already exists in the directory.")
+                            except Exception as e:
+                                print(f"An error occurred: {e}")
                             destination_path = os.path.join(DIR_PATH , f'{type}\X3')
-                            shutil.copy(file_path, destination_path)
+                            shutil.copy(new_file_path, destination_path)
+
+                            lr3_counter += 1
+
                         elif 'LR4' in file:
+                            try:
+                                new_file_name = f"{lr4_counter:03d}x4.png"
+                                new_file_path = os.path.join(subdir_path, new_file_name)
+                                os.rename(file_path, new_file_path)
+                            except FileNotFoundError:
+                                print(f"Error: The file '{file_path}' does not exist.")
+                            except FileExistsError:
+                                print(f"Error: A file named '{file_path[:-3]}' already exists in the directory.")
+                            except Exception as e:
+                                print(f"An error occurred: {e}")
                             destination_path = os.path.join(DIR_PATH , f'{type}\X4')
-                            shutil.copy(file_path, destination_path)
+                            shutil.copy(new_file_path, destination_path)
+
+                            lr4_counter += 1
 
 
 if __name__ == '__main__':
