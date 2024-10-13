@@ -9,8 +9,8 @@ datasets:
   train:
     name: RealSR
     type: PairedImageDataset
-    dataroot_gt: kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub
-    dataroot_lq: kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub
+    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub
+    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub
     filename_tmpl: '{}x2'
     io_backend:
       type: disk
@@ -28,12 +28,12 @@ datasets:
 
   # we use multiple validation datasets. The SR benchmark datasets can be download from: https://cv.snu.ac.kr/research/EDSR/benchmark.tar
   val:
-    name: DIV2K_val100
+    name: RealSR
     type: PairedImageDataset
     # dataroot_gt: /kaggle/working/urban100/HR
     # dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
-    dataroot_gt: kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
-    dataroot_lq: kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
+    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
+    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
     filename_tmpl: '{}x2'
     io_backend:
       type: disk
