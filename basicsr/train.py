@@ -47,10 +47,7 @@ def create_train_val_dataloader(opt, logger):
             # if opt['train']['total_iter'] is not None:
             total_iters = int(opt['train']['total_iter'])
             print(f"Epochs : {opt['train']}")
-            if opt['train']['epochs'] is None:
-                total_epochs = math.ceil(total_iters / (num_iter_per_epoch))
-            else:
-                total_epochs = opt['train']['epochs']
+            total_epochs = math.ceil(total_iters / (num_iter_per_epoch))
             logger.info('Training statistics:'
                         f'\n\tNumber of train images: {len(train_set)}'
                         f'\n\tDataset enlarge ratio: {dataset_enlarge_ratio}'
