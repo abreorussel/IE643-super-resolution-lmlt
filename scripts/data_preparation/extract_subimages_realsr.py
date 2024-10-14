@@ -103,8 +103,8 @@ def main():
     opt['save_folder'] = '/kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub'
     # opt['input_folder'] = r'C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)\realsr\Train\X2'
     # opt['save_folder'] = r'C:\Users\abreo\Downloads\archive (2)\RealSR (ICCV2019)\realsr\Train\X2_sub'
-    opt['crop_size'] = 480
-    opt['step'] = 240
+    opt['crop_size'] = 240
+    opt['step'] = 120
     opt['thresh_size'] = 0
     # extract_subimages(opt)
     process_in_batches(opt)
