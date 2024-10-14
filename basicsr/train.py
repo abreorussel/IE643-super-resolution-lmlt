@@ -44,6 +44,7 @@ def create_train_val_dataloader(opt, logger):
 
             num_iter_per_epoch = math.ceil(
                 len(train_set) * dataset_enlarge_ratio / (dataset_opt['batch_size_per_gpu'] * opt['world_size']))
+            # if opt['train']['total_iter'] is not None:
             total_iters = int(opt['train']['total_iter'])
             print(f"Epochs : {opt['train']}")
             if opt['train']['epochs'] is None:
