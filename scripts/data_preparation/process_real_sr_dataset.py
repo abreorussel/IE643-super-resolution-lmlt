@@ -2,6 +2,19 @@ import os
 import shutil
 from tqdm import tqdm
 import argparse
+import cv2
+
+def downsample_image( directory_path , scale_factor):
+    print("Downsampling the images ..................")
+    scale_path = os.path.join(directory_path, 'X'+args.scale)
+    for file in tqdm(os.listdir(scale_path)):
+        input_path = os.path.join(scale_path , file)
+        img = cv2.imread(input_path)
+        h, w = img.shape[:2]
+        new_size = (w // scale_factor, h // scale_factor)
+        downsampled_img = cv2.resize(img, new_size, interpolation=cv2.INTER_CUBIC)
+        cv2.imwrite(input_path, downsampled_img)
+
 
 def create_directory_structure(sub_sub_directory):
 
@@ -136,7 +149,10 @@ if __name__ == '__main__':
 
     create_directory_structure("X" + args.scale)
     transfer_data('Train' , args.scale)
+    downsample_image(os.path.join(DIR_PATH , 'Train'), int(args.scale))
     transfer_data('Val' , args.scale)
+    downsample_image(os.path.join(DIR_PATH , 'Val'), int(args.scale))
+
     shutil.rmtree(os.path.join(PATH , "Canon"))
     shutil.rmtree(os.path.join(PATH , "Nikon"))
 
