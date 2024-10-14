@@ -73,7 +73,8 @@ network_g:
 # path
 path:
   # pretrain_network_g: /data/ECCV/SS/weights/LMLT_re_x2.pth
-  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_tiny_x2_new.pth 
+  # pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_tiny_x2_new.pth
+  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/net_g_latest.pth  
   strict_load_g: true
 
 # validation settings
