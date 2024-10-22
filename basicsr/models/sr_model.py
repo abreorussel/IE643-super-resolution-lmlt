@@ -30,6 +30,9 @@ class SRModel(BaseModel):
             param_key = self.opt['path'].get('param_key_g', 'params')
             self.load_network(self.net_g, load_path, self.opt['path'].get('strict_load_g', True), param_key)
 
+            if opt['path'].get('finetune') :
+                print("Fine Tuning..............")
+
         if self.is_train:
             self.init_training_settings()
 
@@ -52,6 +55,7 @@ class SRModel(BaseModel):
             else:
                 self.model_ema(0)  # copy net_g weight
             self.net_g_ema.eval()
+
 
         # define losses
         if train_opt.get('pixel_opt'):
