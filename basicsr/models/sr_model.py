@@ -31,7 +31,20 @@ class SRModel(BaseModel):
             self.load_network(self.net_g, load_path, self.opt['path'].get('strict_load_g', True), param_key)
 
             if opt['path'].get('finetune') :
-                print("Fine Tuning..............")
+                print("Freezing the model layers  ..............")
+                for param in self.net_g.to_feat.parameters():
+                    param.requires_grad = False
+
+                print("Freezing  the Attention Blocks ..........")
+                for i in range(6):  # Adjust this number based on how many blocks you want to freeze
+                    for param in self.net.feats[i].parameters():
+                        param.requires_grad = False
+                for i in range(6, len(self.net.feats)):  # Unfreeze the last 2 blocks
+                    for param in self.net.feats[i].parameters():
+                        param.requires_grad = True
+                for param in self.net.to_img.parameters():
+                    param.requires_grad = True
+                
 
         if self.is_train:
             self.init_training_settings()
