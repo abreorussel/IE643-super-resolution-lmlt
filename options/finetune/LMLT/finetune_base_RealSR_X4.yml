@@ -10,7 +10,7 @@ datasets:
     name: RealSR
     type: PairedImageDataset
     dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub
-    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub
+    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Train/X4_sub
     filename_tmpl: '{}'
     io_backend:
       type: disk
@@ -33,8 +33,8 @@ datasets:
     # dataroot_gt: /kaggle/working/urban100/HR
     # dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
     dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
-    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
-    filename_tmpl: '{}x2'
+    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X4
+    filename_tmpl: '{}x4'
     io_backend:
       type: disk
 
