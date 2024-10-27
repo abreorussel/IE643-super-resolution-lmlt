@@ -85,6 +85,7 @@ path:
 val:
   save_img: true
   suffix: ~  # add suffix to saved images, if None, use exp name
+  bic: false
 
   metrics:
     psnr: # metric name, can be arbitrary
