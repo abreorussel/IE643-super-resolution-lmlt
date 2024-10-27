@@ -298,7 +298,8 @@ class SRModel(BaseModel):
         out_dict = OrderedDict()
         out_dict['lq'] = self.lq.detach().cpu()
         out_dict['result'] = self.output.detach().cpu()
-        out_dict['bic'] = self.bicubic_output.detach().cpu()
+        if self.opt['val'].get('bic'):
+            out_dict['bic'] = self.bicubic_output.detach().cpu()
         if hasattr(self, 'gt'):
             out_dict['gt'] = self.gt.detach().cpu()
         return out_dict
