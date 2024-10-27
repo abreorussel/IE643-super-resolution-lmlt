@@ -215,7 +215,7 @@ class SRModel(BaseModel):
                 metric_data['img2'] = gt_img
                 del self.gt
 
-            print(f"Before t2I : {visuals["gt"].shape} After: {gt_img.shape}")
+            print(f"Before t2I : {visuals['gt'].shape} After: {gt_img.shape}")
 
             # tentative for out of GPU memory
             del self.lq
