@@ -171,17 +171,6 @@ class downsample_vit(nn.Module):
     
     def window_partition(self, x, window_size):
         B, H, W, C = x.shape
-        # -------------------------------------
-        # Ensure H and W are divisible by window_size
-        if H % window_size != 0 or W % window_size != 0:
-            pad_h = (window_size - H % window_size) % window_size
-            pad_w = (window_size - W % window_size) % window_size
-            x = F.pad(x, (0, 0, 0, pad_w, 0, pad_h))  # Padding width and height as needed
-
-            # Update H and W after padding
-            H, W = x.shape[1:3]
-
-        #--------------------------------------
         x = x.view(B, H // window_size, window_size, W // window_size, window_size, C)
         return x.permute(0, 1, 3, 2, 4, 5).contiguous().view(-1, window_size, window_size, C)
     
@@ -196,27 +185,9 @@ class downsample_vit(nn.Module):
         Returns:
             x: (b, h, w, c)
         """
-        #------------------------------------
-        # Calculate required padding for h and w to make them multiples of window_size
-        pad_h = (window_size - h % window_size) % window_size
-        pad_w = (window_size - w % window_size) % window_size
-
-        # Update h and w with padding
-        padded_h = h + pad_h
-        padded_w = w + pad_w
-        
-        # Calculate batch size
-        b = int(windows.shape[0] / (padded_h * padded_w / (window_size * window_size)))
-        
-        # Reshape windows to the padded size
-        x = windows.view(b, padded_h // window_size, padded_w // window_size, window_size, window_size, -1)
-        x = x.permute(0, 1, 3, 2, 4, 5).contiguous().view(b, padded_h, padded_w, -1)
-        x = x[:, :h, :w, :]
-        #------------------------------------
-
-        # b = int(windows.shape[0] / (h * w / window_size / window_size))
-        # x = windows.view(b, h // window_size, w // window_size, window_size, window_size, -1)
-        # x = x.permute(0, 1, 3, 2, 4, 5).contiguous().view(b, h, w, -1)
+        b = int(windows.shape[0] / (h * w / window_size / window_size))
+        x = windows.view(b, h // window_size, w // window_size, window_size, window_size, -1)
+        x = x.permute(0, 1, 3, 2, 4, 5).contiguous().view(b, h, w, -1)
         return x
     
     
@@ -406,17 +377,9 @@ class LMLT(nn.Module):
         downsample_scale = 8
         scaled_size = self.window_size * downsample_scale
         
-        # mod_pad_h = (scaled_size - h % scaled_size) % scaled_size
-        # mod_pad_w = (scaled_size - w % scaled_size) % scaled_size
-        # x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
-
-        # Calculate necessary padding, ensuring it doesn't exceed the input dimensions
-        mod_pad_h = min((scaled_size - h % scaled_size) % scaled_size, h - 1)
-        mod_pad_w = min((scaled_size - w % scaled_size) % scaled_size, w - 1)
-
-        # Apply padding if needed
-        if mod_pad_h > 0 or mod_pad_w > 0:
-            x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
+        mod_pad_h = (scaled_size - h % scaled_size) % scaled_size
+        mod_pad_w = (scaled_size - w % scaled_size) % scaled_size
+        x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
         return x
         
         
