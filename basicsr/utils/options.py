@@ -161,6 +161,7 @@ def parse_options(root_path, is_train=True):
         opt['path']['training_states'] = osp.join(experiments_root, 'training_states')
         opt['path']['log'] = experiments_root
         opt['path']['visualization'] = osp.join(experiments_root, 'visualization')
+        opt['path']['bic_visualization'] = osp.join(experiments_root , 'bic_visualization')
 
         # change some options for debug mode
         if 'debug' in opt['name']:
