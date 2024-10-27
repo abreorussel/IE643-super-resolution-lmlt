@@ -2,6 +2,7 @@ import torch
 from collections import OrderedDict
 from os import path as osp
 from tqdm import tqdm
+import torch.nn.functional as F
 
 from basicsr.archs import build_network
 from basicsr.losses import build_loss
@@ -9,6 +10,7 @@ from basicsr.metrics import calculate_metric
 from basicsr.utils import get_root_logger, imwrite, tensor2img
 from basicsr.utils.registry import MODEL_REGISTRY
 from .base_model import BaseModel
+
 
 
 @MODEL_REGISTRY.register()
@@ -170,6 +172,10 @@ class SRModel(BaseModel):
                 self.output = self.net_g(self.lq)
             self.net_g.train()
 
+    def bicubic_upscaling(self):
+        with torch.no_grad():
+            self.bicubic_output = F.interpolate(self.lq , scale_factor = self.opt['network_g'].get('upscaling_factor') , mode='bicubic', align_corners=False)
+
     def dist_validation(self, dataloader, current_iter, tb_logger, save_img):
         if self.opt['rank'] == 0:
             self.nondist_validation(dataloader, current_iter, tb_logger, save_img)
@@ -196,10 +202,13 @@ class SRModel(BaseModel):
             img_name = osp.splitext(osp.basename(val_data['lq_path'][0]))[0]
             self.feed_data(val_data)
             self.test()
+            self.bicubic_upscaling()
 
             visuals = self.get_current_visuals()
             sr_img = tensor2img([visuals['result']])
+            bic_img = tensor2img([visuals['bic']])
             metric_data['img'] = sr_img
+            # metric_data['bic_img'] = bic_img
             if 'gt' in visuals:
                 gt_img = tensor2img([visuals['gt']])
                 metric_data['img2'] = gt_img
@@ -208,6 +217,7 @@ class SRModel(BaseModel):
             # tentative for out of GPU memory
             del self.lq
             del self.output
+            del self.bicubic_output
             torch.cuda.empty_cache()
 
             if save_img:
@@ -218,10 +228,15 @@ class SRModel(BaseModel):
                     if self.opt['val']['suffix']:
                         save_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
                                                  f'{img_name}_{self.opt["val"]["suffix"]}.png')
+                        save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
+                                                 f'{img_name}_bic.png')
                     else:
                         save_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
                                                  f'{img_name}_{self.opt["name"]}.png')
+                        save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
+                                                 f'{img_name}_bic.png')
                 imwrite(sr_img, save_img_path)
+                imwrite(bic_img , save_bic_img_path)
 
             if with_metrics:
                 # calculate metrics
@@ -260,6 +275,7 @@ class SRModel(BaseModel):
         out_dict = OrderedDict()
         out_dict['lq'] = self.lq.detach().cpu()
         out_dict['result'] = self.output.detach().cpu()
+        out_dict['bic'] = self.bicubic_output.detach().cpu()
         if hasattr(self, 'gt'):
             out_dict['gt'] = self.gt.detach().cpu()
         return out_dict
