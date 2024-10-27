@@ -60,7 +60,7 @@ def main(args):
             img_restored = bgr2ycbcr(img_restored, y_only=True)
 
         # Resize GT
-        img_gt = img_gt[0:img_restored.shape[0], 0:img_restored.shape[1] , :]
+        img_gt = img_gt[0:img_restored.shape[0], 0:img_restored.shape[1] ]
         # calculate PSNR and SSIM
         psnr = calculate_psnr(img_gt * 255, img_restored * 255, crop_border=args.crop_border, input_order='HWC')
         ssim = calculate_ssim(img_gt * 255, img_restored * 255, crop_border=args.crop_border, input_order='HWC')
