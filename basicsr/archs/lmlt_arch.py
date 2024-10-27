@@ -196,9 +196,27 @@ class downsample_vit(nn.Module):
         Returns:
             x: (b, h, w, c)
         """
-        b = int(windows.shape[0] / (h * w / window_size / window_size))
-        x = windows.view(b, h // window_size, w // window_size, window_size, window_size, -1)
-        x = x.permute(0, 1, 3, 2, 4, 5).contiguous().view(b, h, w, -1)
+        #------------------------------------
+        # Calculate required padding for h and w to make them multiples of window_size
+        pad_h = (window_size - h % window_size) % window_size
+        pad_w = (window_size - w % window_size) % window_size
+
+        # Update h and w with padding
+        padded_h = h + pad_h
+        padded_w = w + pad_w
+        
+        # Calculate batch size
+        b = int(windows.shape[0] / (padded_h * padded_w / (window_size * window_size)))
+        
+        # Reshape windows to the padded size
+        x = windows.view(b, padded_h // window_size, padded_w // window_size, window_size, window_size, -1)
+        x = x.permute(0, 1, 3, 2, 4, 5).contiguous().view(b, padded_h, padded_w, -1)
+        x = x[:, :h, :w, :]
+        #------------------------------------
+
+        # b = int(windows.shape[0] / (h * w / window_size / window_size))
+        # x = windows.view(b, h // window_size, w // window_size, window_size, window_size, -1)
+        # x = x.permute(0, 1, 3, 2, 4, 5).contiguous().view(b, h, w, -1)
         return x
     
     
