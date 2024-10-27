@@ -226,7 +226,8 @@ class SRModel(BaseModel):
             # tentative for out of GPU memory
             del self.lq
             del self.output
-            del self.bicubic_output
+            if self.opt['val'].get('bic'):
+                del self.bicubic_output
             torch.cuda.empty_cache()
 
             if save_img:
