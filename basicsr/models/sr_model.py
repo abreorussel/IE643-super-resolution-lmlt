@@ -209,10 +209,13 @@ class SRModel(BaseModel):
             bic_img = tensor2img([visuals['bic']])
             metric_data['img'] = sr_img
             # metric_data['bic_img'] = bic_img
+            
             if 'gt' in visuals:
                 gt_img = tensor2img([visuals['gt']])
                 metric_data['img2'] = gt_img
                 del self.gt
+
+            print(f"Before t2I : {visuals["gt"].shape} After: {gt_img.shape}")
 
             # tentative for out of GPU memory
             del self.lq
