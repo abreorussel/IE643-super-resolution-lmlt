@@ -32,16 +32,16 @@ class SRModel(BaseModel):
             param_key = self.opt['path'].get('param_key_g', 'params')
             self.load_network(self.net_g, load_path, self.opt['path'].get('strict_load_g', True), param_key)
 
-            if opt['path'].get('finetune') :
+            if opt['train'].get('finetune') :
                 print("Freezing the model layers  ..............")
                 for param in self.net_g.to_feat.parameters():
                     param.requires_grad = False
 
                 print("Freezing  the Attention Blocks ..........")
-                for i in range(6):  # Adjust this number based on how many blocks you want to freeze
+                for i in range(4):  # Adjust this number based on how many blocks you want to freeze
                     for param in self.net_g.feats[i].parameters():
                         param.requires_grad = False
-                for i in range(6, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
+                for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
                     for param in self.net_g.feats[i].parameters():
                         param.requires_grad = True
                 for param in self.net_g.to_img.parameters():
@@ -202,11 +202,13 @@ class SRModel(BaseModel):
             img_name = osp.splitext(osp.basename(val_data['lq_path'][0]))[0]
             self.feed_data(val_data)
             self.test()
-            self.bicubic_upscaling()
+            if self.opt['val'].get('bic'):
+                self.bicubic_upscaling()
 
             visuals = self.get_current_visuals()
             sr_img = tensor2img([visuals['result']])
-            bic_img = tensor2img([visuals['bic']])
+            if self.opt['val'].get('bic'):
+                bic_img = tensor2img([visuals['bic']])
             metric_data['img'] = sr_img
             # metric_data['bic_img'] = bic_img
             
@@ -229,15 +231,18 @@ class SRModel(BaseModel):
                     if self.opt['val']['suffix']:
                         save_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
                                                  f'{img_name}_{self.opt["val"]["suffix"]}.png')
-                        # save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
-                                                #  f'{img_name}_bic.png')
+                        if self.opt['val'].get('bic'):
+                            save_bic_img_path = osp.join(self.opt['path']['bic_visualization'], dataset_name,
+                                                    f'{img_name}_bic.png')
                     else:
                         save_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
                                                  f'{img_name}_{self.opt["name"]}.png')
-                        # save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
-                                                #  f'{img_name}_bic.png')
+                        if self.opt['val'].get('bic'):
+                            save_bic_img_path = osp.join(self.opt['path']['bic_visualization'], dataset_name,
+                                                    f'{img_name}_bic.png')
                 imwrite(sr_img, save_img_path)
-                # imwrite(bic_img , save_bic_img_path)
+                if self.opt['val'].get('bic'):
+                    imwrite(bic_img , save_bic_img_path)
 
             if with_metrics:
                 # calculate metrics
