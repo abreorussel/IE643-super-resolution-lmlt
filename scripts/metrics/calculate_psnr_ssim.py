@@ -37,6 +37,8 @@ def main(args):
             img_path_restored = osp.join(args.restored, basename + args.suffix + ext)
         img_restored = cv2.imread(img_path_restored, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
 
+        print(f"gt_path : {img_path} sr_path : {img_path_restored}")
+
         if args.correct_mean_var:
             mean_l = []
             std_l = []
