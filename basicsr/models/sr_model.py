@@ -268,8 +268,9 @@ class SRModel(BaseModel):
                 self._update_best_metric_result(dataset_name, metric, self.metric_results[metric], current_iter)
 
             self._log_validation_metric_values(current_iter, dataset_name, tb_logger)
-        
+        print("Before PLOT")
         if self.opt['train'].get('finetune') :
+            print("INSIDE PLOT")
             # Display LQ and SR images side by side
             fig, axes = plt.subplots(1, 2, figsize=(10, 5))
             axes[0].imshow(lq_img)
