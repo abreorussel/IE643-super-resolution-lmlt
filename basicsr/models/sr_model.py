@@ -215,8 +215,6 @@ class SRModel(BaseModel):
                 metric_data['img2'] = gt_img
                 del self.gt
 
-            print(f"Before t2I : {visuals['gt'].shape} After: {gt_img.shape}")
-
             # tentative for out of GPU memory
             del self.lq
             del self.output
@@ -231,15 +229,15 @@ class SRModel(BaseModel):
                     if self.opt['val']['suffix']:
                         save_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
                                                  f'{img_name}_{self.opt["val"]["suffix"]}.png')
-                        save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
-                                                 f'{img_name}_bic.png')
+                        # save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
+                                                #  f'{img_name}_bic.png')
                     else:
                         save_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
                                                  f'{img_name}_{self.opt["name"]}.png')
-                        save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
-                                                 f'{img_name}_bic.png')
+                        # save_bic_img_path = osp.join(self.opt['path']['visualization'], dataset_name,
+                                                #  f'{img_name}_bic.png')
                 imwrite(sr_img, save_img_path)
-                imwrite(bic_img , save_bic_img_path)
+                # imwrite(bic_img , save_bic_img_path)
 
             if with_metrics:
                 # calculate metrics
