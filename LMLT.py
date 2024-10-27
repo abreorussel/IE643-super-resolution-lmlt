@@ -377,17 +377,10 @@ class LMLT(nn.Module):
         downsample_scale = 8
         scaled_size = self.window_size * downsample_scale
         
-        # mod_pad_h = (scaled_size - h % scaled_size) % scaled_size
-        # mod_pad_w = (scaled_size - w % scaled_size) % scaled_size
-        # x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
-
-        # Calculate necessary padding, ensuring it doesn't exceed the input dimensions
-        mod_pad_h = min((scaled_size - h % scaled_size) % scaled_size, h - 1)
-        mod_pad_w = min((scaled_size - w % scaled_size) % scaled_size, w - 1)
-
-        # Apply padding if needed
-        if mod_pad_h > 0 or mod_pad_w > 0:
-            x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
+        mod_pad_h = (scaled_size - h % scaled_size) % scaled_size
+        mod_pad_w = (scaled_size - w % scaled_size) % scaled_size
+        
+        x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
         return x
         
         
