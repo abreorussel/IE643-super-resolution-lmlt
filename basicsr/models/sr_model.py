@@ -270,16 +270,22 @@ class SRModel(BaseModel):
             self._log_validation_metric_values(current_iter, dataset_name, tb_logger)
         print("Before PLOT")
         if self.opt['train'].get('finetune') :
-            print("INSIDE PLOT")
+            print("Inside")
+            if lq_img is not None and sr_img is not None:
             # Display LQ and SR images side by side
-            fig, axes = plt.subplots(1, 2, figsize=(10, 5))
-            axes[0].imshow(lq_img)
-            axes[0].set_title('Low Resolution')
-            axes[1].imshow(sr_img)
-            axes[1].set_title('Super Resolution')
-            for ax in axes:
-                ax.axis('off')
-            plt.show()  # Display images side by side
+                fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+                axes[0].imshow(lq_img)
+                axes[0].set_title('Low Resolution')
+                axes[1].imshow(sr_img)
+                axes[1].set_title('Super Resolution')
+                
+                for ax in axes:
+                    ax.axis('off')
+
+                plt.tight_layout()
+                plt.show()  # Ensure the images are displayed side by side
+            else:
+                print("LQ or SR image is None; skipping plot display.")
 
     def _log_validation_metric_values(self, current_iter, dataset_name, tb_logger):
         log_str = f'Validation {dataset_name}\n'
