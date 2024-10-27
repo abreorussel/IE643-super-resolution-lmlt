@@ -171,6 +171,17 @@ class downsample_vit(nn.Module):
     
     def window_partition(self, x, window_size):
         B, H, W, C = x.shape
+        # -------------------------------------
+        # Ensure H and W are divisible by window_size
+        if H % window_size != 0 or W % window_size != 0:
+            pad_h = (window_size - H % window_size) % window_size
+            pad_w = (window_size - W % window_size) % window_size
+            x = F.pad(x, (0, 0, 0, pad_w, 0, pad_h))  # Padding width and height as needed
+
+            # Update H and W after padding
+            H, W = x.shape[1:3]
+
+        #--------------------------------------
         x = x.view(B, H // window_size, window_size, W // window_size, window_size, C)
         return x.permute(0, 1, 3, 2, 4, 5).contiguous().view(-1, window_size, window_size, C)
     
