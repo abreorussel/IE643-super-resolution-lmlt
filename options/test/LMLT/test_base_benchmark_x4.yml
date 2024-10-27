@@ -23,7 +23,7 @@ datasets:
     # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X4
     dataroot_gt: /kaggle/working/urban100/HR
     dataroot_lq: /kaggle/working/urban100/LR_bicubic/X4
-    filename_tmpl: '{}
+    filename_tmpl: '{}x4'
     io_backend:
       type: disk
 
