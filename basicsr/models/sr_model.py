@@ -3,6 +3,7 @@ from collections import OrderedDict
 from os import path as osp
 from tqdm import tqdm
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
 from basicsr.archs import build_network
 from basicsr.losses import build_loss
@@ -198,6 +199,9 @@ class SRModel(BaseModel):
         if use_pbar:
             pbar = tqdm(total=len(dataloader), unit='image')
 
+        # To store images from prev epoch
+        lq_img, sr_img, gt_img = None, None, None
+
         for idx, val_data in enumerate(dataloader):
             img_name = osp.splitext(osp.basename(val_data['lq_path'][0]))[0]
             self.feed_data(val_data)
@@ -206,6 +210,8 @@ class SRModel(BaseModel):
                 self.bicubic_upscaling()
 
             visuals = self.get_current_visuals()
+
+            lq_img = tensor2img([visuals['lq']])
             sr_img = tensor2img([visuals['result']])
             if self.opt['val'].get('bic'):
                 bic_img = tensor2img([visuals['bic']])
@@ -261,6 +267,16 @@ class SRModel(BaseModel):
                 self._update_best_metric_result(dataset_name, metric, self.metric_results[metric], current_iter)
 
             self._log_validation_metric_values(current_iter, dataset_name, tb_logger)
+        
+        # Display LQ and SR images side by side
+        fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+        axes[0].imshow(lq_img)
+        axes[0].set_title('Low Resolution')
+        axes[1].imshow(sr_img)
+        axes[1].set_title('Super Resolution')
+        for ax in axes:
+            ax.axis('off')
+        plt.show()  # Display images side by side
 
     def _log_validation_metric_values(self, current_iter, dataset_name, tb_logger):
         log_str = f'Validation {dataset_name}\n'
