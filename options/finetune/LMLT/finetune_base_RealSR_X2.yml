@@ -28,38 +28,35 @@ datasets:
 
   # we use multiple validation datasets. The SR benchmark datasets can be download from: https://cv.snu.ac.kr/research/EDSR/benchmark.tar
   val:
-    test_1:
-      name: RealSR
-      type: PairedImageDataset
-      # dataroot_gt: /kaggle/working/urban100/HR
-      # dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
-      dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
-      dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
-      filename_tmpl: '{}x2'
-      io_backend:
-        type: disk
-    
-    test_2:
-      name: Set5
-      type: PairedImageDataset
-      # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set5/HR
-      # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set5/LR_bicubic/X4
-      dataroot_gt: /kaggle/working/Set5/original
-      dataroot_lq: /kaggle/working/Set5/LRbicx2
-      filename_tmpl: '{}'
-      io_backend:
-        type: disk
+    name: RealSR
+    type: PairedImageDataset
+    # dataroot_gt: /kaggle/working/urban100/HR
+    # dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
+    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
+    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
 
-    test_3:  # the 2nd test dataset
-      name: Urban100
-      type: PairedImageDataset
-      # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/urban100/HR
-      # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X4
-      dataroot_gt: /kaggle/working/urban100/HR
-      dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
-      filename_tmpl: '{}x2'
-      io_backend:
-        type: disk
+  val_set5:
+    name: Set5
+    type: PairedImageDataset
+    # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set5/HR
+    # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set5/LR_bicubic/X2
+    dataroot_gt: /kaggle/working/Set5/original
+    dataroot_lq: /kaggle/working/Set5/LRbicx2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+
+  val_urban100:
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/urban100/HR
+    dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
 
 # network structures
 network_g:
