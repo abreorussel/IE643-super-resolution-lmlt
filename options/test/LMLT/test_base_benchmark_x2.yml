@@ -10,8 +10,9 @@ datasets:
     type: PairedImageDataset
     # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set5/HR
     # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set5/LR_bicubic/X2
-    dataroot_gt: /kaggle/working/Set5/original
-    dataroot_lq: /kaggle/working/Set5/LRbicx2
+    # dataroot_gt: /kaggle/working/Set5/original
+    # dataroot_lq: /kaggle/working/Set5/LRbicx2
+    dataroot_lq: /content/drive/MyDrive/Set5/LRbicx2
     filename_tmpl: '{}'
     io_backend:
       type: disk
@@ -34,14 +35,14 @@ datasets:
   #   io_backend:
   #     type: disk
 
-  # test_4:  # the 2nd test dataset
-  #   name: Urban100
-  #   type: PairedImageDataset
-  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/urban100/HR
-  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/urban100/LR_bicubic/X2
-  #   filename_tmpl: '{}x2'
-  #   io_backend:
-  #     type: disk
+  test_4:  # the 2nd test dataset
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/urban100/HR
+    dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
 
   # test_5:  # the 1st test dataset
   #   name: Manga109
@@ -72,8 +73,9 @@ network_g:
 # path
 path:
   # pretrain_network_g: /data/ECCV/SS/weights/mine_x2_dim_60.pth
-  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2.pth
-  strict_load_g: false
+  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2_new.pth
+  # pretrain_network_g: /content/drive/MyDrive/LMLT_base_x2_new.pth
+  strict_load_g: true
 
 # validation settings
 val:
