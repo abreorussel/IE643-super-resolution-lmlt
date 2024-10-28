@@ -33,7 +33,7 @@ class SRModel(BaseModel):
             param_key = self.opt['path'].get('param_key_g', 'params')
             self.load_network(self.net_g, load_path, self.opt['path'].get('strict_load_g', True), param_key)
 
-            if opt['train'] and opt['train'].get('finetune') :
+            if opt['train']  :
                 print("Freezing the model layers  ..............")
                 for param in self.net_g.to_feat.parameters():
                     param.requires_grad = False
@@ -268,7 +268,7 @@ class SRModel(BaseModel):
                 self._update_best_metric_result(dataset_name, metric, self.metric_results[metric], current_iter)
 
             self._log_validation_metric_values(current_iter, dataset_name, tb_logger)
-        if self.opt['train'] and self.opt['train'].get('finetune') :
+        if self.opt['train']  :
             if lq_img is not None and sr_img is not None:
             # Display LQ and SR images side by side
                 lq_t , sr_t = lq_img.astype('uint8') , sr_img.astype('uint8')
