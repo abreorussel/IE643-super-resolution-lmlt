@@ -33,20 +33,21 @@ class SRModel(BaseModel):
             param_key = self.opt['path'].get('param_key_g', 'params')
             self.load_network(self.net_g, load_path, self.opt['path'].get('strict_load_g', True), param_key)
 
-            if opt.get('train')  :
-                print("Freezing the model layers  ..............")
-                for param in self.net_g.to_feat.parameters():
-                    param.requires_grad = False
-
-                print("Freezing  the Attention Blocks ..........")
-                for i in range(4):  # Adjust this number based on how many blocks you want to freeze
-                    for param in self.net_g.feats[i].parameters():
+            if opt.get('train'):
+                if opt['train'].get('finetune'):
+                    print("Freezing the model layers  ..............")
+                    for param in self.net_g.to_feat.parameters():
                         param.requires_grad = False
-                for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
-                    for param in self.net_g.feats[i].parameters():
+
+                    print("Freezing  the Attention Blocks ..........")
+                    for i in range(4):  # Adjust this number based on how many blocks you want to freeze
+                        for param in self.net_g.feats[i].parameters():
+                            param.requires_grad = False
+                    for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
+                        for param in self.net_g.feats[i].parameters():
+                            param.requires_grad = True
+                    for param in self.net_g.to_img.parameters():
                         param.requires_grad = True
-                for param in self.net_g.to_img.parameters():
-                    param.requires_grad = True
                 
 
         if self.is_train:
@@ -269,22 +270,23 @@ class SRModel(BaseModel):
 
             self._log_validation_metric_values(current_iter, dataset_name, tb_logger)
         if self.opt.get('train') :
-            if lq_img is not None and sr_img is not None:
-            # Display LQ and SR images side by side
-                lq_t , sr_t = lq_img.astype('uint8') , sr_img.astype('uint8')
-                fig, axes = plt.subplots(1, 2, figsize=(10, 5))
-                axes[0].imshow(lq_t)
-                axes[0].set_title('Low Resolution')
-                axes[1].imshow(sr_t)
-                axes[1].set_title('Super Resolution')
-                
-                for ax in axes:
-                    ax.axis('off')
-                plt.savefig('/kaggle/working/side_by_side.png')
-                plt.tight_layout()
-                plt.show()  # Ensure the images are displayed side by side
-            else:
-                print("LQ or SR image is None; skipping plot display.")
+            if self.opt['train'].get('finetune'):
+                if lq_img is not None and sr_img is not None:
+                # Display LQ and SR images side by side
+                    lq_t , sr_t = lq_img.astype('uint8') , sr_img.astype('uint8')
+                    fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+                    axes[0].imshow(lq_t)
+                    axes[0].set_title('Low Resolution')
+                    axes[1].imshow(sr_t)
+                    axes[1].set_title('Super Resolution')
+                    
+                    for ax in axes:
+                        ax.axis('off')
+                    plt.savefig('/kaggle/working/side_by_side.png')
+                    plt.tight_layout()
+                    plt.show()  # Ensure the images are displayed side by side
+                else:
+                    print("LQ or SR image is None; skipping plot display.")
 
     def _log_validation_metric_values(self, current_iter, dataset_name, tb_logger):
         log_str = f'Validation {dataset_name}\n'
