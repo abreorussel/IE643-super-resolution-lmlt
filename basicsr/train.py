@@ -46,7 +46,6 @@ def create_train_val_dataloader(opt, logger):
                 len(train_set) * dataset_enlarge_ratio / (dataset_opt['batch_size_per_gpu'] * opt['world_size']))
             # if opt['train']['total_iter'] is not None:
             total_iters = int(opt['train']['total_iter'])
-            print(f"Epochs : {opt['train']}")
             total_epochs = math.ceil(total_iters / (num_iter_per_epoch))
             logger.info('Training statistics:'
                         f'\n\tNumber of train images: {len(train_set)}'
