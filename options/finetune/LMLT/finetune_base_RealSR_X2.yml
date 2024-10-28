@@ -90,7 +90,7 @@ train:
     eta_min: !!float 1e-5
 
   # total_iter: 500000
-  total_iter: 5000
+  total_iter: 15000
   warmup_iter: -1  # no warm up
 
   # losses
