@@ -273,15 +273,16 @@ class SRModel(BaseModel):
             print("Inside")
             if lq_img is not None and sr_img is not None:
             # Display LQ and SR images side by side
+                lq_t , sr_t = lq_img.astype('uint8') , sr_img.astype('uint8')
                 fig, axes = plt.subplots(1, 2, figsize=(10, 5))
-                axes[0].imshow(lq_img)
+                axes[0].imshow(lq_t)
                 axes[0].set_title('Low Resolution')
-                axes[1].imshow(sr_img)
+                axes[1].imshow(sr_t)
                 axes[1].set_title('Super Resolution')
                 
                 for ax in axes:
                     ax.axis('off')
-
+                plt.savefig('/kaggle/working/side_by_side.png')
                 plt.tight_layout()
                 plt.show()  # Ensure the images are displayed side by side
             else:
