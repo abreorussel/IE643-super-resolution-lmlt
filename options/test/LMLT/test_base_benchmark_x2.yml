@@ -10,9 +10,9 @@ datasets:
     type: PairedImageDataset
     # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set5/HR
     # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set5/LR_bicubic/X2
-    # dataroot_gt: /kaggle/working/Set5/original
-    # dataroot_lq: /kaggle/working/Set5/LRbicx2
-    dataroot_lq: /content/drive/MyDrive/Set5/LRbicx2
+    dataroot_gt: /kaggle/working/Set5/original
+    dataroot_lq: /kaggle/working/Set5/LRbicx2
+    # dataroot_lq: /content/drive/MyDrive/Set5/LRbicx2
     filename_tmpl: '{}'
     io_backend:
       type: disk
