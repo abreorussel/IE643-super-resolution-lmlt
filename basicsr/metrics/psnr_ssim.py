@@ -23,7 +23,6 @@ def calculate_psnr(img, img2, crop_border, input_order='HWC', test_y_channel=Fal
     Returns:
         float: psnr result.
     """
-    print(f"Gt: {img.shape} Restored: {img2.shape}")
 
     assert img.shape == img2.shape, (f'Image shapes are different: {img.shape}, {img2.shape}.')
     if input_order not in ['HWC', 'CHW']:
