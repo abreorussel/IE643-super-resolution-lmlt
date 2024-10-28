@@ -347,8 +347,8 @@ class LMLT(nn.Module):
                  n_blocks=8, 
                  ffn_scale=2.0, 
                  upscaling_factor=4,
-                 drop_rate=0., 
-                 attn_drop_rate=0.,
+                 drop_rate=0.1, 
+                 attn_drop_rate=0.1,
                  drop_path_rate=0.,):
         
         super().__init__()
