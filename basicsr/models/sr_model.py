@@ -40,12 +40,12 @@ class SRModel(BaseModel):
                         param.requires_grad = False
 
                     print("Freezing  the Attention Blocks ..........")
-                    for i in range(6):  # Adjust this number based on how many blocks you want to freeze
+                    for i in range(8):  # Adjust this number based on how many blocks you want to freeze
                         for param in self.net_g.feats[i].parameters():
                             param.requires_grad = False
-                    for i in range(6, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
-                        for param in self.net_g.feats[i].parameters():
-                            param.requires_grad = True
+                    # for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
+                    #     for param in self.net_g.feats[i].parameters():
+                    #         param.requires_grad = True
                     for param in self.net_g.to_img.parameters():
                         param.requires_grad = True
                 
