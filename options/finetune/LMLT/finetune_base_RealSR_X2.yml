@@ -66,6 +66,13 @@ network_g:
   ffn_scale: 2.0
   upscaling_factor: 2
 
+network_teacher:
+  type: LMLT
+  dim: 60
+  n_blocks: 8
+  ffn_scale: 2.0
+  upscaling_factor: 2
+
 # path
 path:
   pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2_new.pth
