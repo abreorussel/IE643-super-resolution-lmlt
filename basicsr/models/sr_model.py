@@ -21,10 +21,17 @@ class SRModel(BaseModel):
     def __init__(self, opt):
         super(SRModel, self).__init__(opt)
 
-        # define network
+        # define network STUDENT
         self.net_g = build_network(opt['network_g'])
         self.net_g = self.model_to_device(self.net_g)
         self.print_network(self.net_g)
+
+        # ----------ADDED
+        # Define teacher network for knowledge distillation (frozen during training)
+        self.teacher = build_network(opt['network_teacher']).to(self.device)
+        self.teacher.eval()
+        print("Teacher network loaded for knowledge distillation.")
+        #--------------
 
         # load pretrained models
         print("LOADING PRETRAINED MODEL")
@@ -40,12 +47,12 @@ class SRModel(BaseModel):
                         param.requires_grad = False
 
                     print("Freezing  the Attention Blocks ..........")
-                    for i in range(8):  # Adjust this number based on how many blocks you want to freeze
+                    for i in range(4):  # Adjust this number based on how many blocks you want to freeze
                         for param in self.net_g.feats[i].parameters():
                             param.requires_grad = False
-                    # for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
-                    #     for param in self.net_g.feats[i].parameters():
-                    #         param.requires_grad = True
+                    for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
+                        for param in self.net_g.feats[i].parameters():
+                            param.requires_grad = True
                     for param in self.net_g.to_img.parameters():
                         param.requires_grad = True
                 
@@ -95,6 +102,11 @@ class SRModel(BaseModel):
         else:
             self.cri_wave = None
 
+        if train_opt.get('distillation'):
+            self.cri_distillation = torch.nn.L1Loss()
+        else:
+            self.cri_distillation = None
+
         if self.cri_pix is None and self.cri_perceptual is None and self.cri_freq is None and self.cri_wave is None:
             raise ValueError('Pixel, perceptual and frequency losses are None.')
 
@@ -125,8 +137,19 @@ class SRModel(BaseModel):
         self.optimizer_g.zero_grad()
         self.output = self.net_g(self.lq)
 
+        # Distillation: Get teacher's output
+        with torch.no_grad():
+            teacher_output = self.teacher(self.lq)
+
         l_total = 0
         loss_dict = OrderedDict()
+
+        # Distillation loss (comparing student and teacher outputs)
+        l_distill = self.cri_distillation(self.output, teacher_output)
+        l_total += l_distill
+        loss_dict['l_distill'] = l_distill
+
+
         # pixel loss
         if self.cri_pix:
             l_pix = self.cri_pix(self.output, self.gt)
