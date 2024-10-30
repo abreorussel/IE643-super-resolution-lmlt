@@ -107,7 +107,7 @@ class SRModel(BaseModel):
         else:
             self.cri_distillation = None
 
-        if self.cri_pix is None and self.cri_perceptual is None and self.cri_freq is None and self.cri_wave is None:
+        if self.cri_pix is None and self.cri_perceptual is None and self.cri_wave is None:
             raise ValueError('Pixel, perceptual and frequency losses are None.')
 
         # set up optimizers and schedulers
