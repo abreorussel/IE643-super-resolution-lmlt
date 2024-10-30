@@ -136,8 +136,10 @@ class SRModel(BaseModel):
     def optimize_parameters(self, current_iter):
         self.optimizer_g.zero_grad()
         self.output = self.net_g(self.lq)
+        
+        train_opt = self.opt['train'].get('distillation')
 
-        distillation_loss_weight = self.opt['distillation'].get('loss_weight')
+        distillation_loss_weight = train_opt.get('loss_weight')
 
         # Distillation: Get teacher's output
         with torch.no_grad():
