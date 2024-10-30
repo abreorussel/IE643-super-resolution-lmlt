@@ -137,6 +137,8 @@ class SRModel(BaseModel):
         self.optimizer_g.zero_grad()
         self.output = self.net_g(self.lq)
 
+        distillation_loss_weight = self.opt['distillation'].get('loss_weight')
+
         # Distillation: Get teacher's output
         with torch.no_grad():
             teacher_output = self.teacher(self.lq)
@@ -146,14 +148,13 @@ class SRModel(BaseModel):
 
         # Distillation loss (comparing student and teacher outputs)
         l_distill = self.cri_distillation(self.output, teacher_output)
-        l_total += l_distill
         loss_dict['l_distill'] = l_distill
 
 
         # pixel loss
         if self.cri_pix:
             l_pix = self.cri_pix(self.output, self.gt)
-            l_total += l_pix
+            l_total += l_pix + (distillation_loss_weight * l_distill)
             loss_dict['l_pix'] = l_pix
 
         # frequency loss
