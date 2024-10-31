@@ -47,10 +47,10 @@ class SRModel(BaseModel):
                         param.requires_grad = False
 
                     print("Freezing  the Attention Blocks ..........")
-                    for i in range(4):  # Adjust this number based on how many blocks you want to freeze
+                    for i in range(2):  # Adjust this number based on how many blocks you want to freeze
                         for param in self.net_g.feats[i].parameters():
                             param.requires_grad = False
-                    for i in range(4, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
+                    for i in range(2, len(self.net_g.feats)):  # Unfreeze the last 2 blocks
                         for param in self.net_g.feats[i].parameters():
                             param.requires_grad = True
                     for param in self.net_g.to_img.parameters():
@@ -133,13 +133,23 @@ class SRModel(BaseModel):
         if 'gt' in data:
             self.gt = data['gt'].to(self.device)
 
-    def optimize_parameters(self, current_iter):
+    def adjust_distill_weight(self ,epoch):
+        # Linearly adjust the distillation weight based on epoch count
+        train_opt = self.opt['train'].get('distillation')
+        initial_distill_weight = train_opt.get('initial_distill_weight')
+        min_distill_weight = train_opt.get('min_distill_weight')
+        weight_decay_epochs = train_opt.get("weight_decay_epochs")
+        decay_rate = (initial_distill_weight - min_distill_weight) / weight_decay_epochs
+        new_weight = max(min_distill_weight, initial_distill_weight - epoch * decay_rate)
+        return new_weight
+
+    def optimize_parameters(self, current_iter , epoch = None):
         self.optimizer_g.zero_grad()
         self.output = self.net_g(self.lq)
         
         train_opt = self.opt['train'].get('distillation')
 
-        distillation_loss_weight = train_opt.get('loss_weight')
+        distillation_loss_weight = self.adjust_distill_weight(epoch)
 
         # Distillation: Get teacher's output
         with torch.no_grad():

@@ -108,6 +108,9 @@ train:
 
   distillation:
     type: L1Loss
+    initial_distill_weight: 0.5
+    min_distill_weight: 0.2
+    weight_decay_epochs: 2
     loss_weight: 0.5
     reduction: mean
 
