@@ -174,6 +174,7 @@ def parse_options(root_path, is_train=True):
         opt['path']['results_root'] = results_root
         opt['path']['log'] = results_root
         opt['path']['visualization'] = osp.join(results_root, 'visualization')
+        opt['path']['bic_visualization'] = osp.join(experiments_root , 'bic_visualization')
 
     return opt, args
 
