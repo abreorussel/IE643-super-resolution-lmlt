@@ -197,6 +197,8 @@ def train_pipeline(root_path):
             iter_timer.start()
             train_data = prefetcher.next()
         # end of iter
+        logger.info(f'Saving model at the end of epoch {epoch}')
+        model.save(epoch, current_iter)
 
     # end of epoch
 
