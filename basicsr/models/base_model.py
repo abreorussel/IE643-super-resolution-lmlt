@@ -193,7 +193,7 @@ class BaseModel():
         return [param_group['lr'] for param_group in self.optimizers[0].param_groups]
 
     @master_only
-    def save_network(self, net, net_label, current_iter, param_key='params'):
+    def save_network(self, net, net_label, current_iter, epoch, param_key='params'):
         """Save networks.
 
         Args:
@@ -205,7 +205,7 @@ class BaseModel():
         """
         if current_iter == -1:
             current_iter = 'latest'
-        save_filename = f'{net_label}_{current_iter}.pth'
+        save_filename = f'{net_label}_epoch{epoch}.pth'
         save_path = os.path.join(self.opt['path']['models'], save_filename)
 
         net = net if isinstance(net, list) else [net]
