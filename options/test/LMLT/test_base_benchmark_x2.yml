@@ -26,14 +26,16 @@ datasets:
     io_backend:
       type: disk
 
-  # test_2:  # the 2nd test dataset
-  #   name: Set14
-  #   type: PairedImageDataset
-  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set14/HR
-  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set14/LR_bicubic/X2
-  #   filename_tmpl: '{}x2'
-  #   io_backend:
-  #     type: disk
+  test_3:  # the 2nd test dataset
+    name: Set14
+    type: PairedImageDataset
+    # dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Set14/HR
+    # dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Set14/LR_bicubic/X2
+    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
+    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
 
   # test_3:  # the 1st test dataset
   #   name: B100
@@ -83,7 +85,7 @@ network_g:
 path:
   # pretrain_network_g: /data/ECCV/SS/weights/mine_x2_dim_60.pth
   # pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2_new.pth
-  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/net_g_epoch2.pth
+  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2_new.pth
   # pretrain_network_g: /content/drive/MyDrive/LMLT_base_x2_new.pth
   strict_load_g: true
 
