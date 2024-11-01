@@ -63,7 +63,7 @@ def create_train_val_dataloader(opt, logger):
         else:
             raise ValueError(f'Dataset phase {phase} is not recognized.')
 
-    return train_loader, train_sampler, val_loaders, total_epochs, total_iters
+    return train_loader, train_sampler, val_loaders, total_epochs, total_iters, num_iter_per_epoch
 
 
 def load_resume_state(opt):
@@ -119,7 +119,7 @@ def train_pipeline(root_path):
 
     # create train and validation dataloaders
     result = create_train_val_dataloader(opt, logger)
-    train_loader, train_sampler, val_loaders, total_epochs, total_iters = result
+    train_loader, train_sampler, val_loaders, total_epochs, total_iters, num_iter_per_epoch = result
 
     # create model
     model = build_model(opt)
@@ -187,7 +187,7 @@ def train_pipeline(root_path):
                 model.save(epoch, current_iter)
 
             # validation
-            if opt.get('val') is not None and (current_iter % opt['val']['val_freq'] == 0):
+            if opt.get('val') is not None and (current_iter % num_iter_per_epoch == 0):
                 if len(val_loaders) > 1:
                     logger.warning('Multiple validation datasets are *only* supported by SRModel.')
                 for val_loader in val_loaders:
