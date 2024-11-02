@@ -26,14 +26,13 @@ class SRModel(BaseModel):
         self.net_g = self.model_to_device(self.net_g)
         self.print_network(self.net_g)
 
-        # ----------ADDED
         if opt.get('train'):
             if opt['train'].get('finetune'):
                 # Define teacher network for knowledge distillation (frozen during training)
                 self.teacher = build_network(opt['network_teacher']).to(self.device)
                 self.teacher.eval()
                 print("Teacher network loaded for knowledge distillation.")
-                #--------------
+                
 
         # load pretrained models
         print("LOADING PRETRAINED MODEL")
