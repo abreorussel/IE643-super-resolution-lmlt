@@ -26,7 +26,7 @@ def create_directory_structure(sub_sub_directory):
 
     # Create subdirectories and their sub-subdirectories
     for subdir in subdirectories:
-        # Path for the current subdirectory
+
         subdir_path = os.path.join(DIR_PATH, subdir)
         
         # Create the subdirectory
@@ -157,7 +157,9 @@ if __name__ == '__main__':
     shutil.rmtree(os.path.join(PATH , "Nikon"))
 
 
-# python process_real_sr_dataset.py --directory_path "C:\\Users\\abreo\\Downloads\\archive (2)\\RealSR (ICCV2019)" --new_directory_name "realsr"  --scale "2"
+
+# Script to execute the preprocessing step
+# python process_real_sr_dataset.py --directory_path "C:\\Users\\abreo\\Downloads\\archive (2)\\RealSR (ICCV2019)" --new_directory_name "realsr"  --scale "4"
                             
 
 
