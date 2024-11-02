@@ -61,7 +61,7 @@ network_g:
 # path
 path:
   # pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/LMLT_base_x2_new.pth
-  pretrain_network_g: /kaggle/working/LMLT_forked/experiments/pretrained_model/net_g_epoch2.pth
+  pretrain_network_g: /kaggle/working/IE643-super-resolution-lmlt/experiments/pretrained_model/net_g_epoch2.pth
   # pretrain_network_g: /content/drive/MyDrive/LMLT_base_x2_new.pth
   strict_load_g: true
 
