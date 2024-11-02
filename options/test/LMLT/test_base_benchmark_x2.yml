@@ -55,24 +55,6 @@ datasets:
     io_backend:
       type: disk
 
-  # test_5:  # the 1st test dataset
-  #   name: Manga109
-  #   type: PairedImageDataset
-  #   dataroot_gt: /data/ECCV/SR/dataset_img/testsets/Manga109/HR
-  #   dataroot_lq: /data/ECCV/SR/dataset_img/testsets/Manga109/LR_bicubic/X2
-  #   filename_tmpl: '{}x2'
-  #   io_backend:
-  #     type: disk
-  
-  # test_6:
-  #   name: DIV2K_val100
-  #   type: PairedImageDataset
-  #   dataroot_gt: datasets/DIV2K/DIV2K_Valid/HR
-  #   dataroot_lq: datasets/DIV2K/DIV2K_Valid/LR_bicubic/X2
-  #   filename_tmpl: '{}x2'
-  #   io_backend:
-  #     type: disk
-
 # network structures
 network_g:
   type: LMLT
