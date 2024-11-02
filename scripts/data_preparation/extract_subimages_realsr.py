@@ -9,48 +9,6 @@ import shutil
 
 from basicsr.utils import scandir
 
-# def scandir(dir_path, suffix=None, recursive=False, full_path=False):
-#     """Scan a directory to find the interested files.
-
-#     Args:
-#         dir_path (str): Path of the directory.
-#         suffix (str | tuple(str), optional): File suffix that we are
-#             interested in. Default: None.
-#         recursive (bool, optional): If set to True, recursively scan the
-#             directory. Default: False.
-#         full_path (bool, optional): If set to True, include the dir_path.
-#             Default: False.
-
-#     Returns:
-#         A generator for all the interested files with relative paths.
-#     """
-
-#     if (suffix is not None) and not isinstance(suffix, (str, tuple)):
-#         raise TypeError('"suffix" must be a string or tuple of strings')
-
-#     root = dir_path
-
-#     def _scandir(dir_path, suffix, recursive):
-#         for entry in os.scandir(dir_path):
-#             if not entry.name.startswith('.') and entry.is_file():
-#                 if full_path:
-#                     return_path = entry.path
-#                 else:
-#                     return_path = osp.relpath(entry.path, root)
-
-#                 if suffix is None:
-#                     yield return_path
-#                 elif return_path.endswith(suffix):
-#                     yield return_path
-#             else:
-#                 if recursive:
-#                     yield from _scandir(entry.path, suffix=suffix, recursive=recursive)
-#                 else:
-#                     continue
-
-#     return _scandir(dir_path, suffix=suffix, recursive=recursive)
-
-
 def main():
     """A multi-thread tool to crop large images to sub-images for faster IO.
 
@@ -95,7 +53,6 @@ def main():
     opt['crop_size'] = 480
     opt['step'] = 240
     opt['thresh_size'] = 0
-    # extract_subimages(opt)
     process_in_batches(opt)
 
     # LRx2 images
@@ -106,26 +63,7 @@ def main():
     opt['crop_size'] = 240
     opt['step'] = 120
     opt['thresh_size'] = 0
-    # extract_subimages(opt)
     process_in_batches(opt)
-
-    # LRx3 images
-    # opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X3'
-    # opt['save_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X3_sub'
-    # opt['crop_size'] = 160
-    # opt['step'] = 80
-    # opt['thresh_size'] = 0
-    # extract_subimages(opt)
-    # process_in_batches(opt)
-
-    # LRx4 images
-    # opt['input_folder'] = '/kaggle/input/div2k-dataset/DIV2K/DIV2K_train_LR_bicubic/X4'
-    # opt['save_folder'] = '/kaggle/working/DIV2K/DIV2K_train_LR_bicubic/X4_sub'
-    # opt['crop_size'] = 120
-    # opt['step'] = 60
-    # opt['thresh_size'] = 0
-    # extract_subimages(opt)
-    # process_in_batches(opt)
 
 
 def process_in_batches(opt):
@@ -165,16 +103,10 @@ def extract_subimages(opt , img_list):
             n_thread (int): Thread number.
     """
     input_folder = opt['input_folder']
-    # save_folder = opt['save_folder']
     save_folder = opt['save_folder_batch']
     if not osp.exists(save_folder):
         os.makedirs(save_folder)
         print(f'mkdir {save_folder} ...')
-    # else:
-    #     print(f'Folder {save_folder} already exists. Exit.')
-    #     sys.exit(1)
-
-    # img_list = list(scandir(input_folder, full_path=True))
 
     pbar = tqdm(total=len(img_list), unit='image', desc='Extract')
     pool = Pool(opt['n_thread'])
