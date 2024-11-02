@@ -254,7 +254,6 @@ class SRModel(BaseModel):
             if self.opt['val'].get('bic'):
                 bic_img = tensor2img([visuals['bic']])
             metric_data['img'] = sr_img
-            # metric_data['bic_img'] = bic_img
             
             if 'gt' in visuals:
                 gt_img = tensor2img([visuals['gt']])
@@ -349,13 +348,6 @@ class SRModel(BaseModel):
         if hasattr(self, 'gt'):
             out_dict['gt'] = self.gt.detach().cpu()
         return out_dict
-
-    # def save(self, epoch, current_iter):
-    #     if hasattr(self, 'net_g_ema'):
-    #         self.save_network([self.net_g, self.net_g_ema], 'net_g', current_iter, param_key=['params', 'params_ema'])
-    #     else:
-    #         self.save_network(self.net_g, 'net_g', current_iter)
-    #     self.save_training_state(epoch, current_iter)
 
     def save(self, epoch, current_iter):
         if hasattr(self, 'net_g_ema'):
