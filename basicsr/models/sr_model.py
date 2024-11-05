@@ -34,6 +34,13 @@ class SRModel(BaseModel):
                 print("Teacher network loaded for knowledge distillation.")
                 
 
+        teacher_path = self.opt['path'].get('pretrain_network_g', None)
+        if teacher_path is not None:
+            self.load_network(self.teacher, teacher_path, strict=True)
+
+        for param in self.teacher.parameters():
+            param.requires_grad = False
+
         # load pretrained models
         print("LOADING PRETRAINED MODEL")
         load_path = self.opt['path'].get('pretrain_network_g', None)
