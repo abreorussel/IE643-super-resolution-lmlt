@@ -48,9 +48,10 @@ You can test LMLT following commands below
 python3 basicsr/test.py -opt options/test/LMLT/test_base_benchmark_X2.yml
 ```
 
-### Refer the lmlt_notebook.ipynb for finetuning steps.
-### Refer the IE643_Final_Streamlit_Interface_Crop.ipynb for the Interface.
-### The interface code is mentionend in streamlit.py
+### NOTE
+Refer the lmlt_notebook.ipynb for finetuning steps.
+Refer the IE643_Final_Streamlit_Interface_Crop.ipynb for the Interface.
+The interface code is mentionend in streamlit.py
 
 
 
