@@ -62,7 +62,7 @@ The interface code is mentioned in streamlit.py.
 This project builds upon the work of others:
 
 - **Research Paper**:  
-  [*Title of the Paper*](https://www.arxiv.org/abs/2409.03516) by Jeongsoo Kim, Jongho Nang, Junsuk Choe<sup>*</sup>. Published in 2024*.
+  [*LMLT: Low-to-high Multi-Level Vision Transformer for Image Super-Resolution*](https://www.arxiv.org/abs/2409.03516) by Jeongsoo Kim, Jongho Nang, Junsuk Choe<sup>*</sup>. Published in 2024*.
 
 - **Code Repository**:  
   Original implementation by [GitHubUser](https://github.com/jwgdmkj/LMLT/tree/main) on GitHub.
