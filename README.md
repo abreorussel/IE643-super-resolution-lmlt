@@ -39,7 +39,7 @@ By running the code above, you will get subimages of RealSR dataset.
 You can finetune LMLT with the following command below.
 ```
 python3 basicsr/train.py -opt options/finetune/LMLT/finetune_base_RealSR_X2.yml
-
+```
 
 
 ### Test
