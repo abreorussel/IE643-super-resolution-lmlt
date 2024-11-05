@@ -1,8 +1,7 @@
-# LMLT(Low-to-high Multi-Level Vision Transformer)
+# Generating High Resolution Zoom-IN for Images using LMLT-Base-x2 (Low-to-high Multi-Level Vision Transformer)
 
-Jeongsoo Kim, Jongho Nang, Junsuk Choe<sup>*</sup>
+Russel Abreo ,Anand Patel
 
-<sup>*</sup> : Corresponding author
 
 ### Requirements
 ```
@@ -16,39 +15,51 @@ python3 setup.py develop
 
 
 ### Dataset
-We used DIV2K, Flickr2K as Training dataset.
+The model is trained on DIV2K, Flickr2K.
 You can download two datasets at https://github.com/dslisleedh/Download_df2k/blob/main/download_df2k.sh
-and prepare other test datasets at https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md#Common-Image-SR-Datasets
+and prepare other test datasets at https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md#Common-Image-SR-Datasets.
+
+The model is finetuned on RealSR dataset. The link for the dataset is https://www.kaggle.com/datasets/yashchoudhary/realsr-v1.
+
+### Preprocessing the dataset
+
+Creating a compatible directory structure.
+```
+python process_real_sr_dataset.py --directory_path "path_to_dataset_directory" --new_directory_name "realsr"  --scale "2"
 
 And also, you'd better extract subimages using 
 ```
-python3 scripts/data_preparation/extract_subimages.py
+python3 scripts/data_preparation/extract_subimages_realsr.py
 ```
-By running the code above, you may get subimages of training datasets.
+By running the code above, you will get subimages of RealSR dataset.
 
 
+### Finetune
+You can finetune LMLT with the following command below.
+```
+python3 basicsr/train.py -opt options/finetune/LMLT/finetune_base_RealSR_X2.yml
 
-### Training
-You can train LMLT following commands below 
-```
-python3 basicsr/train.py -opt options/train/LMLT/train_tiny(base, large)_DF2K_X2(3, 4).yml
-```
-And also, we set `torch.backends.cudnn.benchmark` to `True` to accelerate training process so that results can be fluctuated a little. If you want to get fixed output, you should set it to `False` and set `torch.backends.cudnn.deterministic` to `True`.
 
 
 ### Test
 You can test LMLT following commands below
 ```
-python3 basicsr/test.py -opt options/test/LMLT/test_tiny(base, large)_benchmark_X2(3, 4).yml
+python3 basicsr/test.py -opt options/test/LMLT/test_base_benchmark_X2.yml
 ```
 
-### Result
-![Readme1](https://github.com/user-attachments/assets/67dbd3ea-fcd4-46fb-a8d3-0b7a9608634a)
-Result table with #Param and #FLOPs
+### Refer the lmlt_notebook.ipynb for finetuning steps.
+### Refer the IE643_Final_Streamlit_Interface_Crop.ipynb for the Interface.
+### The interface code is mentionend in streamlit.py
 
-![image](https://github.com/user-attachments/assets/bbd6b28c-9bac-42c7-956d-2805e66382fb)
-Result table with GPU Consumption and AVG Time
 
-### Results
-We will provide visual results of LMLT_Base x4 scale soon. 
-If you want to see only architecture, please refer to `LMLT.py`.
+
+## Credits
+
+This project builds upon the work of others:
+
+- **Research Paper**:  
+  [*Title of the Paper*](https://www.arxiv.org/abs/2409.03516) by Jeongsoo Kim, Jongho Nang, Junsuk Choe<sup>*</sup>. Published in 2024*.
+
+- **Code Repository**:  
+  Original implementation by [GitHubUser](https://github.com/jwgdmkj/LMLT/tree/main) on GitHub.
+
