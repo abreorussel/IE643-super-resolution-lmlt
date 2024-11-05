@@ -65,5 +65,5 @@ This project builds upon the work of others:
   [*LMLT: Low-to-high Multi-Level Vision Transformer for Image Super-Resolution*](https://www.arxiv.org/abs/2409.03516) by Jeongsoo Kim, Jongho Nang, Junsuk Choe<sup>*</sup>. Published in 2024*.
 
 - **Code Repository**:  
-  Original implementation by [GitHubUser](https://github.com/jwgdmkj/LMLT/tree/main) on GitHub.
+  Original implementation by [jwgdmkj](https://github.com/jwgdmkj/LMLT/tree/main) on GitHub.
 
