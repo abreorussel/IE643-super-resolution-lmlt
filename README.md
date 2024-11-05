@@ -26,11 +26,12 @@ The model is finetuned on RealSR dataset. The link for the dataset is https://ww
 Creating a compatible directory structure.
 ```
 python process_real_sr_dataset.py --directory_path "path_to_dataset_directory" --new_directory_name "realsr"  --scale "2"
-
+```
 And also, you'd better extract subimages using 
 ```
 python3 scripts/data_preparation/extract_subimages_realsr.py
 ```
+
 By running the code above, you will get subimages of RealSR dataset.
 
 
