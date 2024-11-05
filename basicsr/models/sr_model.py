@@ -30,16 +30,17 @@ class SRModel(BaseModel):
             if opt['train'].get('finetune'):
                 # Define teacher network for knowledge distillation (frozen during training)
                 self.teacher = build_network(opt['network_teacher']).to(self.device)
+
+                teacher_path = self.opt['path'].get('pretrain_network_g', None)
+                if teacher_path is not None:
+                    self.load_network(self.teacher, teacher_path, strict=True)
+
+                for param in self.teacher.parameters():
+                    param.requires_grad = False
+
                 self.teacher.eval()
                 print("Teacher network loaded for knowledge distillation.")
                 
-
-        teacher_path = self.opt['path'].get('pretrain_network_g', None)
-        if teacher_path is not None:
-            self.load_network(self.teacher, teacher_path, strict=True)
-
-        for param in self.teacher.parameters():
-            param.requires_grad = False
 
         # load pretrained models
         print("LOADING PRETRAINED MODEL")
