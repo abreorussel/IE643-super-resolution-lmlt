@@ -42,13 +42,13 @@ datasets:
   #     type: disk
 
   test_3:  # the 2nd test dataset
-  name: BSD100
-  type: PairedImageDataset
-  dataroot_gt: /kaggle/input/bsd100/BSD100/GT
-  dataroot_lq: /kaggle/input/bsd100/BSD100/X2
-  filename_tmpl: '{}'
-  io_backend:
-    type: disk
+    name: BSD100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/input/bsd100/BSD100/GT
+    dataroot_lq: /kaggle/input/bsd100/BSD100/X2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
 
   
   test_4:  # the 2nd test dataset
