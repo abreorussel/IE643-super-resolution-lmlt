@@ -231,12 +231,8 @@ class SRModel(BaseModel):
     #             ## post-processing
     #         self.net_g.train()
 
-    i = 0
     
     def test(self, output_path="/kaggle/working/output_images"):
-        global i
-        i += 1
-        
         # Ensure the output directory exists
         os.makedirs(output_path, exist_ok=True)
 
@@ -259,7 +255,7 @@ class SRModel(BaseModel):
                 output_image = ToPILImage()(output_image_tensor.clamp(0, 1))  # Convert to image (clamp for safety)
                 
                 # Save the output image
-                output_image_file = os.path.join(output_path, f"super_resolved_output_{i}.png")
+                output_image_file = os.path.join(output_path, "super_resolved_output.png")
                 output_image.save(output_image_file)
                 print(f"Output image saved to {output_image_file}")
 
