@@ -221,17 +221,40 @@ def paired_paths_from_folder(folders, keys, filename_tmpl):
     gt_paths = list(scandir(gt_folder))
     assert len(input_paths) == len(gt_paths), (f'{input_key} and {gt_key} datasets have different number of images: '
                                                f'{len(input_paths)}, {len(gt_paths)}.')
+    # paths = []
+    # for gt_path in gt_paths:
+    #     basename, ext = osp.splitext(osp.basename(gt_path))
+    #     # print(f"basename : {basename} ext:{ext}")
+    #     input_name = f'{filename_tmpl.format(basename)}{ext}'
+    #     # print(f"input_name : {input_name} filename_tmpl : {filename_tmpl}")
+    #     input_path = osp.join(input_folder, input_name)
+    #     assert input_name in input_paths, f'{input_name} is not in {input_key}_paths.'
+    #     gt_path = osp.join(gt_folder, gt_path)
+    #     paths.append(dict([(f'{input_key}_path', input_path), (f'{gt_key}_path', gt_path)]))
+    # return paths
+
     paths = []
     for gt_path in gt_paths:
         basename, ext = osp.splitext(osp.basename(gt_path))
-        # print(f"basename : {basename} ext:{ext}")
-        input_name = f'{filename_tmpl.format(basename)}{ext}'
-        # print(f"input_name : {input_name} filename_tmpl : {filename_tmpl}")
+        
+        # Normalize filenames by removing redundant parts
+        normalized_basename = basename.replace('_SRF_2_HR', '').replace('_SRF_2_LR', '')
+        
+        # Create input_name based on normalized basename and filename_tmpl
+        input_name = f'{filename_tmpl.format(normalized_basename)}{ext}'
+        
+        # Join paths for GT and LQ
         input_path = osp.join(input_folder, input_name)
+        gt_full_path = osp.join(gt_folder, gt_path)
+        
+        # Ensure the input_name exists in input_paths
         assert input_name in input_paths, f'{input_name} is not in {input_key}_paths.'
-        gt_path = osp.join(gt_folder, gt_path)
-        paths.append(dict([(f'{input_key}_path', input_path), (f'{gt_key}_path', gt_path)]))
+
+        # Append the matched paths to the paths list
+        paths.append(dict([(f'{input_key}_path', input_path), (f'{gt_key}_path', gt_full_path)]))
+
     return paths
+
 
 
 def paths_from_folder(folder):
