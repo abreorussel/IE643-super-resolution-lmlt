@@ -60,7 +60,7 @@ network_g:
 
 # path
 path:
-  pretrain_network_g: /kaggle/working/IE643-super-resolution-lmlt/experiments/pretrained_model/LMLT_base_x2.pth
+  pretrain_network_g: /kaggle/working/IE643-super-resolution-lmlt/experiments/pretrained_model/LMLT_base_x2_new.pth
   strict_load_g: true
 
 # validation settings
