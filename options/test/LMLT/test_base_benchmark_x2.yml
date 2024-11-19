@@ -23,7 +23,7 @@ manual_seed: 0
   #   io_backend:
   #     type: disk
 
-  test_2:  # the 2nd test dataset
+  test_1:  # the 2nd test dataset
     name: Set14
     type: PairedImageDataset
     dataroot_gt: /kaggle/working/set14/GT
