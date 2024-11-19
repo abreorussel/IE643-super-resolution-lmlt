@@ -30,7 +30,7 @@ manual_seed: 0
     dataroot_lq: /kaggle/working/set14/X2
     filename_tmpl: '{}'
     io_backend:
-      type: disk
+    type: disk
 
   # test_3:  # the 1st test dataset
   #   name: B100
