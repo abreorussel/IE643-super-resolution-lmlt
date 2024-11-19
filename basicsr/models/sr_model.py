@@ -231,7 +231,10 @@ class SRModel(BaseModel):
     #         self.net_g.train()
 
 
-    def test(self):
+    def test(self, output_path="output_images"):
+        # Ensure the output directory exists
+        os.makedirs(output_path, exist_ok=True)
+
         if hasattr(self, 'net_g_ema'):
             self.net_g_ema.eval()
             with torch.no_grad():
@@ -239,23 +242,21 @@ class SRModel(BaseModel):
         else:
             self.net_g.eval()
             
-            ## pre-processing steps here if required
+            ## Pre-processing steps here if required
             
             with torch.no_grad():
                 self.output = self.net_g(self.lq)  # Model inference
                 
-                ## post-processing steps here if required
+                ## Post-processing steps here if required
                 
-                # Convert the output tensor to a PIL image for visualization
+                # Convert the output tensor to a PIL image for saving
                 output_image_tensor = self.output.squeeze(0).cpu()  # Remove batch dimension and move to CPU
                 output_image = ToPILImage()(output_image_tensor.clamp(0, 1))  # Convert to image (clamp for safety)
                 
-                # Display the output image
-                plt.figure(figsize=(8, 8))
-                plt.imshow(output_image)
-                plt.axis('off')
-                plt.title("Super-Resolved Output")
-                plt.show()
+                # Save the output image
+                output_image_file = os.path.join(output_path, "super_resolved_output.png")
+                output_image.save(output_image_file)
+                print(f"Output image saved to {output_image_file}")
 
             self.net_g.train()
 
