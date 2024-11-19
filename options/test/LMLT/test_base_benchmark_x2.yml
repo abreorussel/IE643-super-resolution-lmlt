@@ -8,26 +8,26 @@ datasets:
   test_1:  # the 1st test dataset
     name: Set5
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/Set5/original
-    dataroot_lq: /kaggle/working/Set5/LRbicx2
+    dataroot_gt: /kaggle/input/set5-dataset/Set5/GT
+    dataroot_lq: /kaggle/input/set5-dataset/Set5/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
 
-  test_2:  # the 2nd test dataset
-    name: RealSR
-    type: PairedImageDataset
-    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
-    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
-    filename_tmpl: '{}x2'
-    io_backend:
-      type: disk
+  # test_2:  # the 2nd test dataset
+  #   name: RealSR
+  #   type: PairedImageDataset
+  #   dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
+  #   dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
+  #   filename_tmpl: '{}x2'
+  #   io_backend:
+  #     type: disk
 
-  test_3:  # the 2nd test dataset
+  test_2:  # the 2nd test dataset
     name: Set14
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/Set14/original
-    dataroot_lq: /kaggle/working/Set14/LRbicx2
+    dataroot_gt: /kaggle/input/set14-dataset/set14/GT
+    dataroot_lq: /kaggle/input/set14-dataset/set14/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
@@ -41,11 +41,30 @@ datasets:
   #   io_backend:
   #     type: disk
 
+  test_3:  # the 2nd test dataset
+  name: BSD100
+  type: PairedImageDataset
+  dataroot_gt: /kaggle/input/bsd100/BSD100/GT
+  dataroot_lq: /kaggle/input/bsd100/BSD100/X2
+  filename_tmpl: '{}'
+  io_backend:
+    type: disk
+
+  
   test_4:  # the 2nd test dataset
     name: Urban100
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/urban100/HR
-    dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
+    dataroot_gt: /kaggle/input/urban100/Urban100/GT
+    dataroot_lq: /kaggle/input/urban100/Urban100/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+
+  test_5:  # the 2nd test dataset
+    name: Unplash2K100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/input/unplash2k/Unsplash2K/GT
+    dataroot_lq: /kaggle/input/unplash2k/Unsplash2K/X2
     filename_tmpl: '{}x2'
     io_backend:
       type: disk
@@ -78,3 +97,7 @@ val:
       type: calculate_ssim
       crop_border: 2
       test_y_channel: true
+    lpips:
+      type: calculate_lpips
+      crop_border: 2
+      test_y_channel: false
