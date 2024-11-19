@@ -72,9 +72,15 @@ class PairedImageDataset(data.Dataset):
         # Load gt and lq images. Dimension order: HWC; channel order: BGR;
         # image range: [0, 1], float32.
         gt_path = self.paths[index]['gt_path']
+        
+        # Normalize filenames to ensure matching (truncation logic if needed)
+        # gt_path = os.path.basename(gt_path).replace('_SRF_2_HR.png', '')            # Edit
+        
         img_bytes = self.file_client.get(gt_path, 'gt')
         img_gt = imfrombytes(img_bytes, float32=True)
         lq_path = self.paths[index]['lq_path']
+        
+        # lq_path = os.path.basename(lq_path).replace('_SRF_2_LR.png', '')            # Edit
         img_bytes = self.file_client.get(lq_path, 'lq')
         img_lq = imfrombytes(img_bytes, float32=True)
 
