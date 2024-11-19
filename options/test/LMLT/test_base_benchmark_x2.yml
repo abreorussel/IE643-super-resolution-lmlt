@@ -8,8 +8,8 @@ datasets:
   test_1:  # the 1st test dataset
     name: Set5
     type: PairedImageDataset
-    dataroot_gt: /kaggle/input/set5-dataset/Set5/GT
-    dataroot_lq: /kaggle/input/set5-dataset/Set5/X2
+    dataroot_gt: /kaggle/working/set5/GT
+    dataroot_lq: /kaggle/working/set5/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
@@ -26,8 +26,8 @@ datasets:
   test_2:  # the 2nd test dataset
     name: Set14
     type: PairedImageDataset
-    dataroot_gt: /kaggle/input/set14-dataset/set14/GT
-    dataroot_lq: /kaggle/input/set14-dataset/set14/X2
+    dataroot_gt: /kaggle/working/set14/GT
+    dataroot_lq: /kaggle/working/set14/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
@@ -42,20 +42,20 @@ datasets:
   #     type: disk
 
   test_3:  # the 2nd test dataset
-    name: BSD100
+    name: Urban100
     type: PairedImageDataset
-    dataroot_gt: /kaggle/input/bsd100/BSD100/GT
-    dataroot_lq: /kaggle/input/bsd100/BSD100/X2
+    dataroot_gt: /kaggle/working/urban100/GT
+    dataroot_lq: /kaggle/working/urban100/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
 
   
   test_4:  # the 2nd test dataset
-    name: Urban100
+    name: BSD100
     type: PairedImageDataset
-    dataroot_gt: /kaggle/input/urban100/Urban100/GT
-    dataroot_lq: /kaggle/input/urban100/Urban100/X2
+    dataroot_gt: /kaggle/working/bsd100/GT
+    dataroot_lq: /kaggle/working/bsd100/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
