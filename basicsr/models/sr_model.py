@@ -16,6 +16,9 @@ from PIL import Image, ImageFilter
 import numpy as np
 import torchvision.transforms as transform
 
+from torchvision.transforms import ToPILImage
+import matplotlib.pyplot as plt
+
 
 
 @MODEL_REGISTRY.register()
@@ -212,6 +215,22 @@ class SRModel(BaseModel):
         if self.ema_decay > 0:
             self.model_ema(decay=self.ema_decay)
 
+    # def test(self):
+    #     if hasattr(self, 'net_g_ema'):
+    #         self.net_g_ema.eval()
+    #         with torch.no_grad():
+    #             self.output = self.net_g_ema(self.lq)
+    #     else:
+    #         self.net_g.eval()
+    #         ## pre-processing
+
+    #         with torch.no_grad():
+    #             self.output = self.net_g(self.lq)
+
+    #             ## post-processing
+    #         self.net_g.train()
+
+
     def test(self):
         if hasattr(self, 'net_g_ema'):
             self.net_g_ema.eval()
@@ -219,12 +238,27 @@ class SRModel(BaseModel):
                 self.output = self.net_g_ema(self.lq)
         else:
             self.net_g.eval()
-            ## pre-processing
-
+            
+            ## pre-processing steps here if required
+            
             with torch.no_grad():
-                self.output = self.net_g(self.lq)
-                ## post-processing
+                self.output = self.net_g(self.lq)  # Model inference
+                
+                ## post-processing steps here if required
+                
+                # Convert the output tensor to a PIL image for visualization
+                output_image_tensor = self.output.squeeze(0).cpu()  # Remove batch dimension and move to CPU
+                output_image = ToPILImage()(output_image_tensor.clamp(0, 1))  # Convert to image (clamp for safety)
+                
+                # Display the output image
+                plt.figure(figsize=(8, 8))
+                plt.imshow(output_image)
+                plt.axis('off')
+                plt.title("Super-Resolved Output")
+                plt.show()
+
             self.net_g.train()
+
 
 
     # def test(self):
