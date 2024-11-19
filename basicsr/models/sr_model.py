@@ -239,7 +239,7 @@ class SRModel(BaseModel):
 
         # Convert PIL back to tensor
         def pil_to_tensor(pil_image):
-            preprocess = transforms.ToTensor()
+            preprocess = transform.ToTensor()
             return preprocess(pil_image).unsqueeze(0).to(self.pre_proc.device)
 
         if hasattr(self, 'net_g_ema'):
