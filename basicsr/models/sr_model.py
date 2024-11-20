@@ -232,113 +232,113 @@ class SRModel(BaseModel):
     #         self.net_g.train()
 
     
-    def test(self, output_path="/kaggle/working/output_images"):
-        # Ensure the output directory exists
-        os.makedirs(output_path, exist_ok=True)
-
-        if hasattr(self, 'net_g_ema'):
-            self.net_g_ema.eval()
-            with torch.no_grad():
-                self.output = self.net_g_ema(self.lq)
-        else:
-            self.net_g.eval()
-            
-            ## Pre-processing steps here if required
-            
-            with torch.no_grad():
-                self.output = self.net_g(self.lq)  # Model inference
-                
-                ## Post-processing steps here if required
-                
-                # Convert the output tensor to a PIL image for saving
-                output_image_tensor = self.output.squeeze(0).cpu()  # Remove batch dimension and move to CPU
-                output_image = ToPILImage()(output_image_tensor.clamp(0, 1))  # Convert to image (clamp for safety)
-                
-                # Save the output image
-                output_image_file = os.path.join(output_path, "super_resolved_output.png")
-                output_image.save(output_image_file)
-                print(f"Output image saved to {output_image_file}")
-
-            self.net_g.train()
-
-
-
-    # def test(self):
-    #     padding_size = 50  # Define padding size
-    #     upscale_factor = 2  # Upscale factor
-    #     self.pre_proc = self.lq
-
-    #     # Convert tensor to PIL for applying filters
-    #     def tensor_to_pil(tensor):
-    #         array = tensor.squeeze(0).permute(1, 2, 0).cpu().numpy() * 255
-    #         return Image.fromarray(array.astype(np.uint8))
-
-    #     # Convert PIL back to tensor
-    #     def pil_to_tensor(pil_image):
-    #         preprocess = transform.ToTensor()
-    #         return preprocess(pil_image).unsqueeze(0).to(self.pre_proc.device)
+    # def test(self, output_path="/kaggle/working/output_images"):
+    #     # Ensure the output directory exists
+    #     os.makedirs(output_path, exist_ok=True)
 
     #     if hasattr(self, 'net_g_ema'):
     #         self.net_g_ema.eval()
     #         with torch.no_grad():
-    #             # Pre-processing: Reflect padding
-    #             input_array = np.pad(
-    #                 self.pre_proc.cpu().numpy().transpose(0, 2, 3, 1),  # Convert to HWC for padding
-    #                 ((0, 0), (padding_size, padding_size), (padding_size, padding_size), (0, 0)),
-    #                 mode='reflect'
-    #             )
-    #             self.pre_proc = torch.from_numpy(input_array.transpose(0, 3, 1, 2)).to(self.pre_proc.device)  # Back to CHW
-
-    #             # Convert tensor to PIL for pre-processing filters
-    #             input_pil = tensor_to_pil(self.pre_proc)
-    #             input_pil = input_pil.filter(ImageFilter.SMOOTH_MORE)  # Pre-processing filter example
-    #             self.pre_proc = pil_to_tensor(input_pil)
-
-    #             # Super-resolution inference
-    #             self.output = self.net_g_ema(self.pre_proc)
-
-    #             # Convert tensor to PIL for post-processing filters
-    #             output_pil = tensor_to_pil(self.output)
-    #             output_pil = output_pil.filter(ImageFilter.EDGE_ENHANCE)  # Post-processing filter example
-
-    #             # Post-processing: Remove padding
-    #             crop_padding = padding_size * upscale_factor
-    #             output_pil = output_pil.crop((crop_padding, crop_padding, output_pil.width - crop_padding, output_pil.height - crop_padding))
-
-    #             # Convert PIL back to tensor
-    #             self.output = pil_to_tensor(output_pil)
+    #             self.output = self.net_g_ema(self.lq)
     #     else:
     #         self.net_g.eval()
-
-    #         # Pre-processing: Reflect padding
-    #         input_array = np.pad(
-    #             self.pre_proc.cpu().numpy().transpose(0, 2, 3, 1),  # Convert to HWC for padding
-    #             ((0, 0), (padding_size, padding_size), (padding_size, padding_size), (0, 0)),
-    #             mode='reflect'
-    #         )
-    #         self.pre_proc = torch.from_numpy(input_array.transpose(0, 3, 1, 2)).to(self.pre_proc.device)  # Back to CHW
-
-    #         # Convert tensor to PIL for pre-processing filters
-    #         input_pil = tensor_to_pil(self.pre_proc)
-    #         input_pil = input_pil.filter(ImageFilter.SMOOTH_MORE)  # Pre-processing filter example
-    #         self.pre_proc = pil_to_tensor(input_pil)
-
+            
+    #         ## Pre-processing steps here if required
+            
     #         with torch.no_grad():
-    #             # Super-resolution inference
-    #             self.output = self.net_g(self.pre_proc)
-
-    #         # Convert tensor to PIL for post-processing filters
-    #         output_pil = tensor_to_pil(self.output)
-    #         output_pil = output_pil.filter(ImageFilter.EDGE_ENHANCE)  # Post-processing filter example
-
-    #         # Post-processing: Remove padding
-    #         crop_padding = padding_size * upscale_factor
-    #         output_pil = output_pil.crop((crop_padding, crop_padding, output_pil.width - crop_padding, output_pil.height - crop_padding))
-
-    #         # Convert PIL back to tensor
-    #         self.output = pil_to_tensor(output_pil)
+    #             self.output = self.net_g(self.lq)  # Model inference
+                
+    #             ## Post-processing steps here if required
+                
+    #             # Convert the output tensor to a PIL image for saving
+    #             output_image_tensor = self.output.squeeze(0).cpu()  # Remove batch dimension and move to CPU
+    #             output_image = ToPILImage()(output_image_tensor.clamp(0, 1))  # Convert to image (clamp for safety)
+                
+    #             # Save the output image
+    #             output_image_file = os.path.join(output_path, "super_resolved_output.png")
+    #             output_image.save(output_image_file)
+    #             print(f"Output image saved to {output_image_file}")
 
     #         self.net_g.train()
+
+
+
+    def test(self):
+        padding_size = 50  # Define padding size
+        upscale_factor = 2  # Upscale factor
+        self.pre_proc = self.lq
+
+        # Convert tensor to PIL for applying filters
+        def tensor_to_pil(tensor):
+            array = tensor.squeeze(0).permute(1, 2, 0).cpu().numpy() * 255
+            return Image.fromarray(array.astype(np.uint8))
+
+        # Convert PIL back to tensor
+        def pil_to_tensor(pil_image):
+            preprocess = transform.ToTensor()
+            return preprocess(pil_image).unsqueeze(0).to(self.pre_proc.device)
+
+        if hasattr(self, 'net_g_ema'):
+            self.net_g_ema.eval()
+            with torch.no_grad():
+                # Pre-processing: Reflect padding
+                input_array = np.pad(
+                    self.pre_proc.cpu().numpy().transpose(0, 2, 3, 1),  # Convert to HWC for padding
+                    ((0, 0), (padding_size, padding_size), (padding_size, padding_size), (0, 0)),
+                    mode='reflect'
+                )
+                self.pre_proc = torch.from_numpy(input_array.transpose(0, 3, 1, 2)).to(self.pre_proc.device)  # Back to CHW
+
+                # Convert tensor to PIL for pre-processing filters
+                input_pil = tensor_to_pil(self.pre_proc)
+                input_pil = input_pil.filter(ImageFilter.SMOOTH_MORE)  # Pre-processing filter example
+                self.pre_proc = pil_to_tensor(input_pil)
+
+                # Super-resolution inference
+                self.output = self.net_g_ema(self.pre_proc)
+
+                # Convert tensor to PIL for post-processing filters
+                output_pil = tensor_to_pil(self.output)
+                output_pil = output_pil.filter(ImageFilter.EDGE_ENHANCE)  # Post-processing filter example
+
+                # Post-processing: Remove padding
+                crop_padding = padding_size * upscale_factor
+                output_pil = output_pil.crop((crop_padding, crop_padding, output_pil.width - crop_padding, output_pil.height - crop_padding))
+
+                # Convert PIL back to tensor
+                self.output = pil_to_tensor(output_pil)
+        else:
+            self.net_g.eval()
+
+            # Pre-processing: Reflect padding
+            input_array = np.pad(
+                self.pre_proc.cpu().numpy().transpose(0, 2, 3, 1),  # Convert to HWC for padding
+                ((0, 0), (padding_size, padding_size), (padding_size, padding_size), (0, 0)),
+                mode='reflect'
+            )
+            self.pre_proc = torch.from_numpy(input_array.transpose(0, 3, 1, 2)).to(self.pre_proc.device)  # Back to CHW
+
+            # Convert tensor to PIL for pre-processing filters
+            input_pil = tensor_to_pil(self.pre_proc)
+            input_pil = input_pil.filter(ImageFilter.SMOOTH_MORE)  # Pre-processing filter example
+            self.pre_proc = pil_to_tensor(input_pil)
+
+            with torch.no_grad():
+                # Super-resolution inference
+                self.output = self.net_g(self.pre_proc)
+
+            # Convert tensor to PIL for post-processing filters
+            output_pil = tensor_to_pil(self.output)
+            output_pil = output_pil.filter(ImageFilter.EDGE_ENHANCE)  # Post-processing filter example
+
+            # Post-processing: Remove padding
+            crop_padding = padding_size * upscale_factor
+            output_pil = output_pil.crop((crop_padding, crop_padding, output_pil.width - crop_padding, output_pil.height - crop_padding))
+
+            # Convert PIL back to tensor
+            self.output = pil_to_tensor(output_pil)
+
+            self.net_g.train()
 
 
 
