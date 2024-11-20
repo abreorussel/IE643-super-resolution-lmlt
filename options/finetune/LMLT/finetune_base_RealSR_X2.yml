@@ -7,15 +7,23 @@ manual_seed: 10
 # dataset and data loader settings
 datasets:
   train:
-    name: RealSR
+    # name: RealSR
+    # type: PairedImageDataset
+    # dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub
+    # dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub
+    # filename_tmpl: '{}'
+    # io_backend:
+    #   type: disk
+
+    name: Unplash2K100
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Train/HR_sub
-    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Train/X2_sub
+    dataroot_gt: /kaggle/working/unplash100/GT
+    dataroot_lq: /kaggle/working/unplash100/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
 
-    gt_size: 128
+    gt_size: 128   # 128
     use_hflip: true
     use_rot: true
 
@@ -28,29 +36,63 @@ datasets:
 
   # we use multiple validation datasets. The SR benchmark datasets can be download from: https://cv.snu.ac.kr/research/EDSR/benchmark.tar
   val:
-    name: RealSR
+    # name: RealSR
+    # type: PairedImageDataset
+    # dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
+    # dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
+    # filename_tmpl: '{}x2'
+    # io_backend:
+    #   type: disk
+
+    name: BSD100
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/RealSR (ICCV2019)/realsr/Val/HR
-    dataroot_lq: /kaggle/working/RealSR (ICCV2019)/realsr/Val/X2
-    filename_tmpl: '{}x2'
+    dataroot_gt: /kaggle/working/bsd100/GT
+    dataroot_lq: /kaggle/working/bsd100/X2
+    filename_tmpl: '{}'
     io_backend:
       type: disk
+
+  # val_set5:
+    # name: Set5
+    # type: PairedImageDataset
+    # dataroot_gt: /kaggle/working/Set5/original
+    # dataroot_lq: /kaggle/working/Set5/LRbicx2
+    # filename_tmpl: '{}'
+    # io_backend:
+    #   type: disk
 
   val_set5:
     name: Set5
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/Set5/original
-    dataroot_lq: /kaggle/working/Set5/LRbicx2
+    dataroot_gt: /kaggle/working/set5/GT
+    dataroot_lq: /kaggle/working/set5/X2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+
+  val_set14:
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/set14/GT
+    dataroot_lq: /kaggle/working/set14/X2
     filename_tmpl: '{}'
     io_backend:
       type: disk
 
   val_urban100:
+    # name: Urban100
+    # type: PairedImageDataset
+    # dataroot_gt: /kaggle/working/urban100/HR
+    # dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
+    # filename_tmpl: '{}x2'
+    # io_backend:
+    #   type: disk
+
     name: Urban100
     type: PairedImageDataset
-    dataroot_gt: /kaggle/working/urban100/HR
-    dataroot_lq: /kaggle/working/urban100/LR_bicubic/X2
-    filename_tmpl: '{}x2'
+    dataroot_gt: /kaggle/working/urban100/GT
+    dataroot_lq: /kaggle/working/urban100/X2
+    filename_tmpl: '{}'
     io_backend:
       type: disk
 
@@ -134,6 +176,11 @@ val:
       crop_border: 2
       test_y_channel: True
       better: higher  # the higher, the better. Default: higher
+    lpips:
+      type: calculate_lpips
+      crop_border: 2
+      test_y_channel: false
+      better: lower  # the lower, the better. Default: lower
 
 # logging settings
 logger:
