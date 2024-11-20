@@ -5,14 +5,14 @@ num_gpu: 1  # set num_gpu: 0 for cpu mode
 manual_seed: 0
 
 datasets:
-#   test_1:  # the 1st test dataset
-#     name: Set5
-#     type: PairedImageDataset
-#     dataroot_gt: /kaggle/working/set5/GT
-#     dataroot_lq: /kaggle/working/set5/X2
-#     filename_tmpl: '{}'
-#     io_backend:
-#       type: disk
+  test_1:  # the 1st test dataset
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/set5/GT
+    dataroot_lq: /kaggle/working/set5/X2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
 
   # test_2:  # the 2nd test dataset
   #   name: RealSR
@@ -23,7 +23,7 @@ datasets:
   #   io_backend:
   #     type: disk
 
-  test_1:  # the 2nd test dataset
+  test_2:  # the 2nd test dataset
     name: Set14
     type: PairedImageDataset
     dataroot_gt: /kaggle/working/set14/GT
@@ -41,33 +41,33 @@ datasets:
   #   io_backend:
   #     type: disk
 
-  # test_3:  # the 2nd test dataset
-  #   name: Urban100
-  #   type: PairedImageDataset
-  #   dataroot_gt: /kaggle/working/urban100/GT
-  #   dataroot_lq: /kaggle/working/urban100/X2
-  #   filename_tmpl: '{}'
-  #   io_backend:
-  #     type: disk
+  test_3:  # the 2nd test dataset
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/urban100/GT
+    dataroot_lq: /kaggle/working/urban100/X2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
 
   
-  # test_4:  # the 2nd test dataset
-  #   name: BSD100
-  #   type: PairedImageDataset
-  #   dataroot_gt: /kaggle/working/bsd100/GT
-  #   dataroot_lq: /kaggle/working/bsd100/X2
-  #   filename_tmpl: '{}'
-  #   io_backend:
-  #     type: disk
+  test_4:  # the 2nd test dataset
+    name: BSD100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/bsd100/GT
+    dataroot_lq: /kaggle/working/bsd100/X2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
 
-  # test_5:  # the 2nd test dataset
-  #   name: Unplash2K100
-  #   type: PairedImageDataset
-  #   dataroot_gt: /kaggle/input/unplash2k/Unsplash2K/GT
-  #   dataroot_lq: /kaggle/input/unplash2k/Unsplash2K/X2
-  #   filename_tmpl: '{:06d}_X2'
-  #   io_backend:
-  #     type: disk
+  test_5:  # the 2nd test dataset
+    name: Unplash2K100
+    type: PairedImageDataset
+    dataroot_gt: /kaggle/working/unplash100/GT
+    dataroot_lq: /kaggle/working/unplash100/X2
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
 
 # network structures
 network_g:
