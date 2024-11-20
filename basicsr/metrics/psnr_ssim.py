@@ -96,6 +96,31 @@ def calculate_ssim(img, img2, crop_border, input_order='HWC', test_y_channel=Fal
     return np.array(ssims).mean()
 
 
+# @METRIC_REGISTRY.register()
+# def calculate_lpips(img, img2, crop_border=0, net='vgg', input_order='HWC', scale=2, **kwargs):
+#     """Calculate LPIPS (Learned Perceptual Image Patch Similarity)."""
+#     img = modcrop(img, scale)
+#     img2 = modcrop(img2, scale)
+
+#     assert img.shape == img2.shape, (f'Image shapes are different: {img.shape}, {img2.shape}.')
+#     if input_order != 'HWC':
+#         raise ValueError('LPIPS currently supports input_order="HWC" only.')
+
+#     # Normalize images to [0, 1] and convert to tensors
+#     img = img.astype(np.float32) / 255.
+#     img2 = img2.astype(np.float32) / 255.
+
+#     mean = [0.5, 0.5, 0.5]
+#     std = [0.5, 0.5, 0.5]
+#     img_tensor, img2_tensor = img2tensor([img, img2], bgr2rgb=True, float32=True)
+#     normalize(img_tensor, mean, std, inplace=True)
+#     normalize(img2_tensor, mean, std, inplace=True)
+
+#     # Load LPIPS model
+#     loss_fn_vgg = lpips.LPIPS(net=net).cuda()
+#     lpips_val = loss_fn_vgg(img_tensor.unsqueeze(0).cuda(), img2_tensor.unsqueeze(0).cuda())
+#     return lpips_val.item()
+
 @METRIC_REGISTRY.register()
 def calculate_lpips(img, img2, crop_border=0, net='vgg', input_order='HWC', scale=2, **kwargs):
     """Calculate LPIPS (Learned Perceptual Image Patch Similarity)."""
