@@ -60,14 +60,14 @@ datasets:
     io_backend:
       type: disk
 
-  test_5:  # the 2nd test dataset
-    name: Unplash2K100
-    type: PairedImageDataset
-    dataroot_gt: /kaggle/working/unplash100/GT
-    dataroot_lq: /kaggle/working/unplash100/X2
-    filename_tmpl: '{}'
-    io_backend:
-      type: disk
+  # test_5:  # the 2nd test dataset              ----- For Fine-tuning
+  #   name: Unplash2K100
+  #   type: PairedImageDataset
+  #   dataroot_gt: /kaggle/working/unplash100/GT
+  #   dataroot_lq: /kaggle/working/unplash100/X2
+  #   filename_tmpl: '{}'
+  #   io_backend:
+  #     type: disk
 
 # network structures
 network_g:
