@@ -14,11 +14,11 @@ try:
 except ImportError:
     print('Please install lpips: pip install lpips')
 
-def setup_lpips_silently():
-    # Suppress stdout temporarily
-    with open(os.devnull, 'w') as f, redirect_stdout(f):
-        loss_fn_vgg = lpips.LPIPS(net='vgg')
-    return loss_fn_vgg
+# def setup_lpips_silently():
+#     # Suppress stdout temporarily
+#     with open(os.devnull, 'w') as f, redirect_stdout(f):
+#         loss_fn_vgg = lpips.LPIPS(net='vgg')
+#     return loss_fn_vgg
 
 def modcrop(img, scale):
     """Crop the image so that its dimensions are divisible by the scaling factor."""
@@ -150,11 +150,33 @@ def calculate_lpips(img, img2, crop_border=0, net='vgg', input_order='HWC', scal
     normalize(img_tensor, mean, std, inplace=True)
     normalize(img2_tensor, mean, std, inplace=True)
 
+    # def setup_lpips_silently():
+    #     # Suppress stdout temporarily
+    #     with open(os.devnull, 'w') as f, redirect_stdout(f):
+    #         loss_fn_vgg = lpips.LPIPS(net='vgg')
+    #     return loss_fn_vgg
+
+    # # Load LPIPS model
+    # # loss_fn_vgg = lpips.LPIPS(net=net).cuda()
+    # # Setup LPIPS silently
+    # loss_fn_vgg = setup_lpips_silently()
+    # lpips_val = loss_fn_vgg(img_tensor.unsqueeze(0).cuda(), img2_tensor.unsqueeze(0).cuda())
+
+    def setup_lpips_silently():
+        """Setup LPIPS model silently."""
+        with open(os.devnull, 'w') as f, redirect_stdout(f):
+            loss_fn_vgg = lpips.LPIPS(net='vgg').to('cuda')  # Ensure LPIPS model is on GPU
+        return loss_fn_vgg
+
     # Load LPIPS model
-    # loss_fn_vgg = lpips.LPIPS(net=net).cuda()
-    # Setup LPIPS silently
     loss_fn_vgg = setup_lpips_silently()
-    lpips_val = loss_fn_vgg(img_tensor.unsqueeze(0).cuda(), img2_tensor.unsqueeze(0).cuda())
+
+    # Ensure img_tensor and img2_tensor are on the same device
+    img_tensor = img_tensor.to('cuda')
+    img2_tensor = img2_tensor.to('cuda')
+
+    # Calculate LPIPS
+    lpips_val = loss_fn_vgg(img_tensor.unsqueeze(0), img2_tensor.unsqueeze(0))
     return lpips_val.item()
 
 # import cv2
