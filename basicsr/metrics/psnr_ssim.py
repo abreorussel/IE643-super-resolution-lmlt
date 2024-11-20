@@ -5,11 +5,20 @@ from basicsr.utils.registry import METRIC_REGISTRY
 from torchvision.transforms.functional import normalize
 from basicsr.utils import img2tensor
 
+import os
+import sys
+from contextlib import redirect_stdout
+
 try:
     import lpips
 except ImportError:
     print('Please install lpips: pip install lpips')
 
+def setup_lpips_silently():
+    # Suppress stdout temporarily
+    with open(os.devnull, 'w') as f, redirect_stdout(f):
+        loss_fn_vgg = lpips.LPIPS(net='vgg')
+    return loss_fn_vgg
 
 def modcrop(img, scale):
     """Crop the image so that its dimensions are divisible by the scaling factor."""
@@ -142,7 +151,9 @@ def calculate_lpips(img, img2, crop_border=0, net='vgg', input_order='HWC', scal
     normalize(img2_tensor, mean, std, inplace=True)
 
     # Load LPIPS model
-    loss_fn_vgg = lpips.LPIPS(net=net).cuda()
+    # loss_fn_vgg = lpips.LPIPS(net=net).cuda()
+    # Setup LPIPS silently
+    loss_fn_vgg = setup_lpips_silently()
     lpips_val = loss_fn_vgg(img_tensor.unsqueeze(0).cuda(), img2_tensor.unsqueeze(0).cuda())
     return lpips_val.item()
 
