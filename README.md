@@ -23,6 +23,8 @@ The model is finetuned on RealSR dataset. The link for the dataset is https://ww
 
 ### Preprocessing the dataset
 
+Preprocessing code can be found in process_real_sr_dataset.py and extract_subimages_realsr.py.
+
 Creating a compatible directory structure.
 ```
 python process_real_sr_dataset.py --directory_path "path_to_dataset_directory" --new_directory_name "realsr"  --scale "2"
@@ -36,6 +38,7 @@ By running the code above, you will get subimages of RealSR dataset.
 
 
 ### Finetune
+The configuration for finetuning is present in options/finetune/LMLT/finetune_base_RealSR_X2.yml .
 You can finetune LMLT with the following command below.
 ```
 python3 basicsr/train.py -opt options/finetune/LMLT/finetune_base_RealSR_X2.yml
@@ -51,7 +54,7 @@ python3 basicsr/test.py -opt options/test/LMLT/test_base_benchmark_X2.yml
 ```
 
 ### Novelty 
-Novelty code can be found in the branch "novelty-task". This branch contains changes in app.py .
+Novelty code can be found in the branch "novelty-task". Added lpips loss in basicsr/metrics/psnr_ssim.py. The UI changes are added in streamlit-app.py , preprocessing and postprocessing code is added in sr_model for finetuning purpose. Model is finetuned on unplash2k dataset https://github.com/dongheehand/unsplash2K
 
 ### NOTE
 - Refer the lmlt_notebook.ipynb for finetuning steps.
