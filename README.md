@@ -52,7 +52,7 @@ python3 basicsr/test.py -opt options/test/LMLT/test_base_benchmark_X2.yml
 - Refer the lmlt_notebook.ipynb for finetuning steps.
 Refer the IE643_Final_Streamlit_Interface_Crop.ipynb for the Interface.
 The interface code is mentioned in streamlit.py.
-- T run the interface using streamlit , consider the following repository https://github.com/abreorussel/super-resolution-streamlit-app
+- To run the interface using streamlit , refer the IE643_Final_Streamlit_Interface_Crop.ipynb notebook and consider the following repository https://github.com/abreorussel/super-resolution-streamlit-app
 
 
 
