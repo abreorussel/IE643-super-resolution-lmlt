@@ -62,8 +62,7 @@ Refer the IE643_Final_Streamlit_Interface_Crop.ipynb for the Interface.
 The interface code is mentioned in streamlit.py.
 - To run the interface using streamlit , refer the IE643_Final_Streamlit_Interface_Crop.ipynb notebook and consider the following repository https://github.com/abreorussel/super-resolution-streamlit-app
 - The fintuned and the pretrained model can be found in experiments/models and experiments/pretrained_model respectively.
-
-
+- experiments.py contains all the experiments performed.
 
 
 ## Credits
