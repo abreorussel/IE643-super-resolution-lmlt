@@ -41,12 +41,17 @@ You can finetune LMLT with the following command below.
 python3 basicsr/train.py -opt options/finetune/LMLT/finetune_base_RealSR_X2.yml
 ```
 
+Finetuning code can be found in basicsr/models/sr_model.py where the Knowledge Distillation approach along with Knowledge Distillation Loss is implemented.
+
 
 ### Test
 You can test LMLT following commands below
 ```
 python3 basicsr/test.py -opt options/test/LMLT/test_base_benchmark_X2.yml
 ```
+
+### Novelty 
+Novelty code can be found in the branch "novelty-task". This branch contains changes in app.py .
 
 ### NOTE
 - Refer the lmlt_notebook.ipynb for finetuning steps.
